@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>welcome to notify page /admin/notify</h1>
+    <nav>
+        <ul>
+            <li><button onclick="window.location.href='/admin/home'">home</button></li>
+            <li><button onclick="window.location.href='/admin/shop'">shop</button></li>
+            <li><button onclick="window.location.href='/admin/bills'">bills</button></li>
+            <li><button onclick="window.location.href='/'">logout</button></li>
+        </ul>
+    <br><br>
+    <form action="/admin/notify" method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+    
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+    
+        <label for="dateposted">Date Posted:</label><br>
+        <input type="date" id="dateposted" name="dateposted" required><br><br>
+    
+        <input type="submit" value="Send Notification">
+
+    </form>
+</body>
+</html>

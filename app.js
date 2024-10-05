@@ -4,7 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const AllUser = require('./model/allUsersSchema'); 
+const Bill = require('./model/billschema');
+const Plan = require('./model/allPlanSchema');
 const AllMember = require('./model/allMembersSchema');
+const Shop = require('./model/shopSchema');
 const Admin = require('./model/adminSchema');
 const {restrictToLoggedInOnly, restrictTo} = require('./middleware/middleware');
 
@@ -33,7 +36,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
 
-app.get('/',(req,res)=>{
+app.get('/',(req,res)=>{         // This is the official home page. no user,member or admin auth required, sign up will be found here to become a user.
     res.send(` <button onclick="window.location.href='/login'">Login</button>
     <button onclick="window.location.href='/signup'">Sign Up</button>`);
 });

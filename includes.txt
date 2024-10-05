@@ -1,0 +1,81 @@
+Admin Routes
+GET /home (getAdmin):
+
+Data to Include:
+Total number of members.
+Total revenue (e.g., from all bills).
+Number of unpaid bills.
+Recent activity logs (e.g., new member sign-ups, recent notifications).
+Overview of products in the shop (e.g., total items, low stock alerts).
+GET /notify (getNotify):
+
+Data to Include:
+List of all notifications sent (e.g., message, date sent, recipient).
+Status of notifications (e.g., read/unread).
+Option to create a new notification with fields to fill out (message, target users/members).
+GET /bills (getBills):
+
+Data to Include:
+List of all bills, including member details (e.g., member name, amount, due date, payment status).
+Filter options (e.g., paid/unpaid).
+Statistics on total revenue from bills.
+GET /shop (getShop):
+
+Data to Include:
+List of all products available in the shop, including details like name, price, stock status, and description.
+Low stock alerts.
+Recent purchases or trends.
+Member Routes
+GET /home (getMember):
+
+Data to Include:
+Member's profile information (name, membership plan, expiration date).
+Summary of recent activities (e.g., last visit date, recent payments).
+GET /details (getDetails):
+
+Data to Include:
+Complete member profile information.
+Membership plan details (e.g., duration, benefits).
+Contact information.
+GET /bill (getBill):
+
+Data to Include:
+Current and past bills, including amounts, due dates, and payment statuses.
+Breakdown of charges if applicable (e.g., plan fee, additional services).
+GET /notification (getNotification):
+
+Data to Include:
+List of notifications specific to the member (e.g., reminders for fees, updates on gym events).
+Status of each notification (read/unread).
+GET /cancelmember (cancelMember):
+
+Data to Include:
+Confirmation details regarding the cancellation process.
+Information on the effects of cancellation (e.g., access loss, final bill).
+GET /shop (getShop):
+
+Data to Include:
+List of products available for members to purchase, including pricing and descriptions.
+Current discounts or offers available.
+User Routes
+GET /home (getUser):
+
+Data to Include:
+General information about the gym (e.g., features, membership benefits).
+Call-to-action for signing up or becoming a member.
+GET /membership (becomeMember):
+
+Data to Include:
+Information on how to become a member, including requirements and benefits.
+Steps to proceed with membership signup.
+GET /plans (getPlans):
+
+Data to Include:
+List of all available membership plans, including features, prices, and durations.
+Comparison table to help users choose the best plan.
+GET /store (getStore):
+
+Data to Include:
+Products available in the shop, including details like name, price, and stock.
+Current promotions or featured products.
+These suggestions aim to enhance the user experience by providing relevant and actionable information for each role. Let me know if you need more details or adjustments!
