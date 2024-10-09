@@ -7,12 +7,14 @@ Total revenue (e.g., from all bills).
 Number of unpaid bills.
 Recent activity logs (e.g., new member sign-ups, recent notifications).
 Overview of products in the shop (e.g., total items, low stock alerts).
+
 GET /notify (getNotify):
 
 Data to Include:
 List of all notifications sent (e.g., message, date sent, recipient).
 Status of notifications (e.g., read/unread).
 Option to create a new notification with fields to fill out (message, target users/members).
+
 GET /bills (getBills):
 
 Data to Include:
@@ -79,3 +81,68 @@ Data to Include:
 Products available in the shop, including details like name, price, and stock.
 Current promotions or featured products.
 These suggestions aim to enhance the user experience by providing relevant and actionable information for each role. Let me know if you need more details or adjustments!
+
+
+
+
+
+
+
+
+Member details : 
+1. Personal Information:
+Full Name (First and Last)
+Profile Picture (optional but nice for personalizing)
+Membership ID
+Email Address
+Phone Number
+Date of Birth
+Age (if dynamic, calculated from date of birth)
+Emergency Contact Information
+
+2. Membership Information:
+
+Membership Start Date and Expiration Date
+Membership Plan (e.g., basic, premium, yearly, etc.)
+Duration of Membership (months or years)
+Next Billing Date
+Assigned Trainer (if applicable)
+Upgrade Membership Option (with details on available plans)
+
+3. Payment and Billing: // do it in member/bill not in /details.
+
+Billing History: List of past payments with dates, amounts, and statuses (paid/unpaid).
+Outstanding Payments: If there are any pending fees, clearly show them with due dates.
+Download Receipts: Option to download or view payment receipts.
+Payment Methods on File: Saved credit cards or bank accounts (if relevant).
+
+4. Attendance and Usage:
+
+Gym Attendance: Recent visit history, showing dates and times when the member checked in/out.
+Class/Session Participation: A log of any fitness classes, personal training, or other sessions the member has attended.
+Facility Usage: If possible, provide details on which facilities (e.g., pool, sauna, weight room) they’ve used.\
+
+5. Health and Fitness Information:
+
+Current Fitness Goals: Short-term and long-term goals (e.g., weight loss, muscle gain).
+Progress Tracking: Show fitness metrics (weight, body fat percentage, BMI) over time.
+Workout Plans: Any personalized workout routines assigned to them by trainers.
+Diet Plans: Any dietary or nutrition advice given by gym trainers.
+Supplement Store Recommendations: Based on their goals or preferences.
+
+6. Notifications & Reminders:
+
+Upcoming Classes or Appointments: Any scheduled personal training sessions or fitness classes.
+Renewal Reminders: If their membership is about to expire or they have unpaid bills.
+Promotions: Special offers or discounts for members on supplements, classes, or upgrades.
+
+7. Feedback and Support:
+
+Submit Feedback: A form to submit feedback or suggestions regarding the gym, services, or staff.
+Support Contact: Information on how to contact the gym for issues related to membership, billing, or services.
+
+8. Social and Community Features (Optional):
+
+Member Achievements: Display badges or milestones (e.g., 100 visits, 1-year member).
+Community Challenges: Show details on any gym challenges (e.g., running a marathon, most steps in a month) and their progress.
+Leaderboard: If your gym has a competitive community, display where they rank in fitness challenges or activities.

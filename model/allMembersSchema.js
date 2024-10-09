@@ -27,6 +27,10 @@ const allMemberSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    cart: {
+        type: String,
+        default: '',
+    },
 });
 
 const AllMember = mongoose.model('Member', allMemberSchema);

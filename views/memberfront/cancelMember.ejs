@@ -6,6 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>welcome to cancel membership</h1>
+    <h1>Cancel Your Membership</h1>
+    <div class="cancel-membership-container">
+        <form action="/member/cancelmember" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Confirm Cancellation</button>
+        </form>
+    </div>
 </body>
 </html>

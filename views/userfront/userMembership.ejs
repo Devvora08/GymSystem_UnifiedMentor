@@ -7,5 +7,30 @@
 </head>
 <body>
     <h1>hello user, become a member from here</h1>
+    <ul>
+        <li><button onclick="window.location.href='/user/plans'">Plans</button></li>
+        <li><button onclick="window.location.href='/user/home'">Home</button></li>
+        <li><button onclick="window.location.href='/user/store'">Shop</button></li>
+    </ul>
+
+    <form action="/user/membership" method="POST" class="membership-form">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required min="1">
+        <br><br><br>
+        <label>Membership Plan:</label><br><br><br>
+        <div class="plans">
+            <% allPlans.forEach(plan => { %>
+                <div class="plan-option">
+                    <input type="radio" id="plan-<%= plan._id %>" name="membershipPlan" value="<%= plan._id %>" required>
+                    <label for="plan-<%= plan._id %>">
+                        <strong><%= plan.planName %></strong> - ₹<%= plan.planPrice %> (<%= plan.planDuration %>)
+                        <p><%= plan.description %></p>
+                    </label>
+                </div>
+            <% }) %>
+        </div>
+        
+        <button type="submit">Become a Member</button>
+    </form>
 </body>
 </html>

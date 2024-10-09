@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <h1>welcome to shop of members</h1>
     <ul>
@@ -14,5 +16,87 @@
         <li><button onclick="window.location.href='/member/home'">Home</button></li>
         <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
     </ul>
+
+    <div class="category-section">
+        <!-- Clothing Section -->
+        <h2>Clothing & Accessories</h2>
+        <div class="clothing-items" style="display: flex; flex-direction: row;">
+            <% clothing.forEach(function(item) { %>
+                <div class="item">
+                    <!-- Use item.imageUrl instead of item.imgUrl -->
+                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
+                    <h3>
+                        <%= item.itemName %>
+                    </h3>
+                    <p>Image URL: <%= item.imageUrl %></p>
+                    <p>
+                        <%= item.description %>
+                    </p>
+                    <p>Price: Rs.<%= item.price %>
+                    </p>
+                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <a href="/member/shop/<%= item._id %>" class="view-details-btn">View Details</a>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <h2>Health and Wellness</h2>
+        <div class="health-items" style="display: flex; flex-direction: row;">
+            <% health.forEach(function(item) { %>
+                <div class="item">
+                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
+                    <p>Image URL: <%= item.imageUrl %></p> <!-- Debugging output -->
+                    <h3><%= item.itemName %></h3>
+                    <p><%= item.description %></p>
+                    <p>Price: Rs.<%= item.price %></p>
+                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <a href="/member/shop/<%= item._id %>" class="view-details-btn">View Details</a>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <!-- Clothing Section -->
+        <h2>Equipments</h2>
+        <div class="equipment-items" style="display: flex; flex-direction: row;">
+            <% equipment.forEach(function(item) { %>
+                <div class="item">
+                    <!-- Use item.imageUrl instead of item.imgUrl -->
+                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
+                    <h3>
+                        <%= item.itemName %>
+                    </h3>
+                    <p>
+                        <%= item.description %>
+                    </p>
+                    <p>Price: Rs.<%= item.price %>
+                    </p>
+                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <a href="/member/shop/<%= item._id %>" class="view-details-btn">View Details</a>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+
+    <div class="category-section">
+        <h2>Supplements</h2>
+        <div class="supplement-items" style="display: flex; flex-direction: row;">
+            <% supplement.forEach(function(item) { %>
+                <div class="item">
+                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
+                    <p>Image URL: <%= item.imageUrl %></p> <!-- Debugging output -->
+                    <h3><%= item.itemName %></h3>
+                    <p><%= item.description %></p>
+                    <p>Price: Rs.<%= item.price %></p>
+                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <a href="/member/shop/<%= item._id %>" class="view-details-btn">View Details</a>
+                </div>
+            <% }); %>
+        </div>
+    </div>
 </body>
+
 </html>

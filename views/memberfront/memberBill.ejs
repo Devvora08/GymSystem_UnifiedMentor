@@ -4,6 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table {
+    width: 100%; /* Make the table full width */
+    border-collapse: collapse; /* Collapse borders to avoid double borders */
+    margin: 20px 0; /* Add margin for spacing */
+}
+
+th, td {
+    padding: 12px; /* Add padding for cell content */
+    text-align: left; /* Align text to the left */
+    border: 1px solid #dddddd; /* Light gray border */
+}
+
+th {
+    background-color: #f2f2f2; /* Light gray background for header */
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5; /* Light gray background on hover */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Slightly different color for even rows */
+}
+    </style>
 </head>
 <body>
     <h1>welcome to membership bill</h1>
@@ -14,5 +39,45 @@
         <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
         <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
     </ul>
+    <br>
+    <div class="member-details">
+        <h2>Member Details</h2>
+        <p><strong>Name:</strong> <%= user.name %></p>
+        <p><strong>Membership Plan:</strong> <%= memberDetails.membershipPlan %></p>
+        <p><strong>Membership Duration:</strong> <%= memberDetails.planDuration %></p>
+        <p><strong>Mobile Number:</strong> <%= memberDetails.mobileNumber %></p>
+        <p><strong>Email:</strong> <%= user.email %></p> <!-- Assuming email is present in the user object -->
+      </div>
+      
+      <!-- Bills Section -->
+      <h2>Your Bills</h2>
+      <table>
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (bills.length > 0) { %>
+                <% bills.forEach(function(bill) { %>
+                    <tr>
+                        <td><%= bill._id %></td>
+                        <td>Rs.<%= bill.amount %></td>
+                        <td><%= bill.status %></td>
+                        <td><%= new Date(bill.dueDate).toLocaleDateString() %></td>
+                        <td><%= new Date(bill.createdAt).toLocaleDateString() %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5">No bills found.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
 </body>
 </html>

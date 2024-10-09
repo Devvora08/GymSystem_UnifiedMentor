@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        .box{
+            background-color: green;
+        }
+    </style>
 </head>
 <body>
     <h1>welcome to member/notification</h1>
@@ -14,5 +20,18 @@
         <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
         <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
     </ul>
+
+    <% if (notifications && notifications.length > 0) { %>
+        <% for (let i = notifications.length - 1; i >= 0; i--) { %>
+            <a href="/member/notification/<%= notifications[i]._id %>">
+                <div class="box">
+                    <p><%= notifications[i].message %></p>
+                    <p>Date: <%= notifications[i].datePosted %></p>
+                </div>
+            </a>
+        <% } %>
+    <% } else { %>
+        <p>No notifications available.</p>
+    <% } %>
 </body>
 </html>

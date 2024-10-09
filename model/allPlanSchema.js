@@ -16,6 +16,9 @@ const planSchema = new mongoose.Schema({
   description: { 
     type: String, 
   },
+  planLogoUrl: {
+    type: String,
+  }
 });
 
 const Plan = mongoose.model('Plan', planSchema);

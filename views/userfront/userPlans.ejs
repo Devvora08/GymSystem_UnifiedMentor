@@ -1,11 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .plan-logo {
+            width: 100px;
+            /* Adjust based on your design */
+            height: auto;
+            /* Keeps the aspect ratio intact */
+            margin-bottom: 10px;
+            /* Adds some space between the image and the plan name */
+        }
+
+        .plan-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
     <h1>hello here are plans to see for enrolling</h1>
+    <ul>
+        <li><button onclick="window.location.href='/user/home'">Home</button></li>
+        <li><button onclick="window.location.href='/user/membership'">Become Member</button></li>
+        <li><button onclick="window.location.href='/user/store'">Shop</button></li>
+    </ul>
+    <div class="plans" style="display: flex; flex-direction: row;">
+        <% allPlans.forEach(plan=> { %>
+            <div class="plan-card">
+                <img src="<%= plan.planLogoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
+                <h2>
+                    <%= plan.planName %>
+                </h2>
+                <p><strong>Duration:</strong>
+                    <%= plan.planDuration %>
+                </p>
+                <p><strong>Price:</strong> ₹<%= plan.planPrice %>
+                </p>
+                <p>
+                    <%= plan.description %>
+                </p>
+            </div>
+            <% }) %>
+    </div>
 </body>
+
 </html>

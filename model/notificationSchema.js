@@ -17,6 +17,11 @@ const notificationSchema = new mongoose.Schema({
     type: [String], 
     default: ['member'] 
   },
+  read:{
+    type: String,
+    enum: ['read','unread'],
+    default:'unread',
+  }
 });
 
 const Notification = mongoose.model('Notification', notificationSchema);

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>this is a specific product to view view</h1>
+    <div class="product-detail">
+        <h1><%= shopitm.itemName %></h1>
+        <img src="<%= shopitm.imageUrl %>" alt="<%= shopitm.itemName %>" class="product-image">
+        <p><strong>Description:</strong> <%= shopitm.description %></p>
+        <p><strong>Price:</strong> Rs.<%= shopitm.price %></p>
+        <p><strong>In Stock:</strong> <%= shopitm.stockQuantity %> items</p>
+        <form action="/member/shop/<%= shopitm._id %>" method="POST">
+            <input type="hidden" name="productName" value="<%= shopitm.itemName %>">
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+
+        <a href="/member/shop" class="back-to-shop">Back to Shop</a>
+    </div>
+</body>
+</html>

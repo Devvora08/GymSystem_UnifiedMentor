@@ -42,8 +42,21 @@ app.get('/',(req,res)=>{         // This is the official home page. no user,memb
 });
 
 app.get('/signup',(req,res)=>{
-    res.send('hey you are signing up now');
-})
+    res.render('signup');
+});
+app.post('/signup',async (req,res)=>{
+    const newUser = req.body;
+    const makeUser = await AllUser.create({
+        email: newUser.email,
+        password: newUser.password,
+        name: newUser.name,
+        role: newUser.role,
+        signupDate: new Date()
+    });
+    console.log(makeUser); // checking the new entry 
+    res.redirect("/");
+});
+
 //Routes controlled here
 app.use("/user", restrictToLoggedInOnly,restrictTo(["user"]),userRouter);
 app.use("/admin", restrictToLoggedInOnly, restrictTo(["admin"]), adminRouter);

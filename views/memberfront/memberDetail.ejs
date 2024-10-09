@@ -14,5 +14,48 @@
         <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
         <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
     </ul>
+
+    <h2>Member Name: <%= user.name %></h2>
+<p>Email: <%= user.email %></p>
+<p>Membership ID: <%= memberDetails.membershipPlan %></p>
+<p>Membership Plan: <%= memberDetails.membershipPlan %></p>
+<p>Phone Number: <%= memberDetails.mobileNumber %></p>
+<p>Plan Duration: <%= memberDetails.planDuration %></p>
+<p>Plan Description: <%= myPlan.description %></p>
+<p>Plan Price: <%= myPlan.planPrice %></p>
+<p>Age: <%= memberDetails.age %></p>
+<p>Join Date: <%= memberDetails.joinDate %></p>
+<div>
+    <h2>Recent Notification: <%= lastMsg.title %></h2>
+    <p>Message: <%= lastMsg.message %></p>
+    <p>Posted On: <%= lastMsg.datePosted %></p>
+</div>
+<div>
+    <% if (cartItems.length > 0) { %>
+        <h1>Cart-Items</h1>
+        <% cartItems.forEach(function(item) { %>
+            <div class="cart-item">
+                <!-- Item Image -->
+                <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="item-image">
+                
+                <!-- Item Details -->
+                <div class="item-details">
+                    <h4><%= item.itemName %></h4>
+                    <p>Price: Rs.<%= item.price %></p>
+                </div>
+                <div>
+                    <form class="remove-item-form" method="POST" action="/member/details">
+                        <input type="hidden" class="item-id" name="itemId" value="<%= item._id %>">
+                        <button type="submit" class="remove-btn">Remove Item</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>Your cart is empty. Please add items to your cart.</p>
+    <% } %>
+</div>
+
+
 </body>
 </html>

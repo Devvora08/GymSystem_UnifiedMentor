@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Link to your CSS file -->
+    <title>Notification Detail</title>
+</head>
+<body>
+    <div class="notification-detail">
+        <h1>Notification Detail</h1>
+        <div class="notification-box">
+            <h2><%= notification.title %></h2> <!-- Assuming there's a title field -->
+            <p><%= notification.message %></p> <!-- Display the notification message -->
+            <p>Date: <%= notification.datePosted.toLocaleString() %></p> <!-- Assuming there's a date field -->
+            <p>Status: <%= notification.read %></p> <!-- Display read/unread status -->
+            <input type="checkbox" name="notificationIds" value="<%= notification._id %>" <%= notification.read === 'read' ? 'checked' : '' %>>
+            <label for="notificationIds">Mark as read</label>
+            <form action="/member/notification/:id" method="POST">
+                <button type="submit" class="btn">Go Back</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
