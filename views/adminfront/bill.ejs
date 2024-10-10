@@ -1,18 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: #333;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Add alternate row color for better readability */
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Row hover effect */
+        tr:hover {
+            background-color: #d1e7dd;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Add some style to Amount and Status columns */
+        td.amount {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        td.status {
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        .status.paid {
+            background-color: #4CAF50;
+        }
+
+        .status.unpaid {
+            background-color: #e63946;
+        }
+
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+                width: 100%;
+            }
+
+            th {
+                display: none;
+                /* Hide table headers */
+            }
+
+            td {
+                display: block;
+                padding: 10px;
+                text-align: right;
+                position: relative;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                padding-left: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            td.status {
+                text-align: left;
+            }
+        }
+    </style>
+
 </head>
+
 <body>
-    <h1>welcome to bills page   /admin/bills</h1>
-    <nav>
-        <ul>
-            <li><button onclick="window.location.href='/admin/notify'">notify</button></li>
-            <li><button onclick="window.location.href='/admin/shop'">shop</button></li>
-            <li><button onclick="window.location.href='/admin/home'">home</button></li>
-            <li><button onclick="window.location.href='/'">logout</button></li>
-        </ul>
+    <h1>welcome to bills page</h1>
+    <ul>
+        <li><button onclick="window.location.href='/admin/members'">Back to Members</button></li>
+    </ul>
+    <br>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Mobile Number</th>
+                <th>Joined At</th>
+                <th>Membership Plan</th>
+                <th>Duration</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% membersWithDetails.forEach(member=> { %>
+                <tr>
+                    <td>
+                        <%= member.name %>
+                    </td>
+                    <!-- Email -->
+                    <td>
+                        <%= member.email %>
+                    </td>
+
+                    <!-- Age (assuming age is part of memberDetails) -->
+                    <td>
+                        <%= member.memberDetails.age %>
+                    </td>
+
+                    <!-- Mobile Number -->
+                    <td>
+                        <%= member.memberDetails.mobileNumber %>
+                    </td>
+
+                    <!-- Joined At (formatted to display date nicely) -->
+                    <td>
+                        <%= new Date(member.memberDetails.joinDate).toLocaleDateString('en-GB', { day: '2-digit' ,
+                            month: 'short' , year: 'numeric' }) %>
+                    </td>
+
+                    <!-- Membership Plan -->
+                    <td>
+                        <%= member.memberDetails.membershipPlan %>
+                    </td>
+
+                    <!-- Duration -->
+                    <td>
+                        <%= member.memberDetails.planDuration %>
+                    </td>
+
+                    <!-- Amount (from bill details, assuming one bill per member or using the latest bill) -->
+                    <td>
+                        <%= member.billDetails.length> 0 ? member.billDetails[0].amount : "N/A" %>
+                    </td>
+
+                    <!-- Status (paid/unpaid based on bill status) -->
+                    <td>
+                        <%= member.billDetails.length> 0 ? member.billDetails[0].status : "N/A" %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
 </body>
+
 </html>

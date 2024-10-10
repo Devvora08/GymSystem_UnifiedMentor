@@ -37,8 +37,7 @@ app.use(cookieParser());
 
 
 app.get('/',(req,res)=>{         // This is the official home page. no user,member or admin auth required, sign up will be found here to become a user.
-    res.send(` <button onclick="window.location.href='/login'">Login</button>
-    <button onclick="window.location.href='/signup'">Sign Up</button>`);
+    res.render("homepage.ejs");
 });
 
 app.get('/signup',(req,res)=>{

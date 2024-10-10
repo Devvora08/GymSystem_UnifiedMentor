@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Notifications Container */
+        .notifications-container {
+          display: flex;
+          flex-direction: column;
+          gap: 20px; /* Spacing between notification boxes */
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+      
+        /* Notification Box */
+        .box {
+          background-color: #f9f9f9;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          transition: transform 0.2s ease;
+        }
+      
+        /* Box Hover Effect */
+        .box:hover {
+          transform: scale(1.02);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+      
+        /* Notification Message Text */
+        .box p {
+          margin: 0;
+          font-size: 16px;
+          line-height: 1.5;
+          color: #333;
+        }
+      
+        /* Date Styling */
+        .box p:nth-child(2) {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #888;
+        }
+      
+        /* "Post New Notification" Button */
+        .post-notification-btn {
+          display: inline-block;
+          padding: 10px 20px;
+          margin-top: 20px;
+          background-color: #4CAF50;
+          color: white;
+          text-transform: uppercase;
+          border-radius: 5px;
+          text-align: center;
+          text-decoration: none;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+        }
+      
+        .post-notification-btn:hover {
+          background-color: #45a049;
+        }
+      </style>
+</head>
+<body>
+    <h1>here notifications will be shown</h1>
+    <ul>
+        <li><button onclick="window.location.href='/admin/home'">home</button></li>
+        <li><button onclick="window.location.href='/admin/shop'">shop</button></li>
+        <li><button onclick="window.location.href='/admin/members'">members</button></li>
+    </ul>
+    <div class="notifications-container">
+        <% if (notifications && notifications.length > 0) { %>
+          <% for (let i = notifications.length - 1; i >= 0; i--) { %>
+            <div class="box">
+              <p><%= notifications[i].message %></p>
+              <p>Date: <%= new Date(notifications[i].datePosted).toLocaleDateString('en-GB', {
+                    day: '2-digit', month: 'short', year: 'numeric'
+                  }) %></p>
+            </div>
+          <% } %>
+        <% } else { %>
+          <p>No notifications available.</p>
+        <% } %>
+      
+        <!-- "Post New Notification" Button -->
+        <a href="/admin/notify/post" class="post-notification-btn">Post New Notification</a>
+      </div>
+</body>
+</html>

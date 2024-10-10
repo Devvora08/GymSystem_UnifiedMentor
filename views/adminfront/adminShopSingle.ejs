@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit the items here :</h1>
+    <div class="product-detail">
+        <h1><%= shopitm.itemName %></h1>
+        <img src="<%= shopitm.imageUrl %>" alt="<%= shopitm.itemName %>" class="product-image">
+        <form action="/admin/shop/<%= shopitm._id %>" method="POST">
+            <div>
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="<%= shopitm.description %>" value="<%= shopitm.description %>" required>
+            </div>   
+            <div>
+                <label for="price">Price (Rs):</label>
+                <input type="number" id="price" name="price" placeholder="<%= shopitm.price %>" value="<%= shopitm.price %>" required>
+            </div>
+            <div>
+                <label for="stockQuantity">In Stock:</label>
+                <input type="number" id="stockQuantity" name="stockQuantity" placeholder="<%= shopitm.stockQuantity %>" value="<%= shopitm.stockQuantity %>" required>
+            </div>
+        
+            <button type="submit">Update Product</button>
+        </form>
+        
+
+        <a href="/admin/shop" class="back-to-shop">Back to Shop</a>
+    </div>
+</body>
+</html>
