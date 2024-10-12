@@ -1,6 +1,7 @@
 const AllUser = require('../model/allUsersSchema');
 const AllMember = require('../model/allMembersSchema');
 const Bill = require('../model/billschema');
+const Admin = require('../model/adminSchema');
 const Notification = require('../model/notificationSchema');
 const Plan = require('../model/allPlanSchema');
 const Shop = require('../model/shopSchema');
@@ -13,8 +14,86 @@ const { getUser } = require('../service/auth');
 
 
 async function getMember(req, res) {
-    res.render('memberfront/memberHome')
-};
+    const token = req.cookies.uid; // or wherever you're storing it
+    if (!token) {
+        return res.status(401).json({ msg: "Unauthorized access" });
+    }
+
+    const currentUser = getUser(token); 
+    const user = await AllUser.findOne({ _id: currentUser._id }); // take user's name from here.
+    const memberDetails = await AllMember.findOne({ userId: user._id });
+    const today = new Date();
+    if (!memberDetails) {
+        return res.status(404).json({ msg: "Member details not found" });
+    }
+
+    const bills = await Bill.find({ memberId: memberDetails._id });
+    const admins = await AllUser.find({ role: 'admin' });
+    const recentNotification = await Notification.findOne({}).sort({ createdAt: -1 }).limit(1);
+    const events = [
+        {
+            name: 'Yoga Class',
+            description: 'Join our relaxing and refreshing yoga class.',
+            date: new Date(today.setDate(today.getDate() + 1)), // 1 day from today
+            time: '10:00 AM',
+            admin: admins[0] // Assuming the first admin organizes this event
+        },
+        {
+            name: 'HIIT Workout',
+            description: 'High-Intensity Interval Training to get your heart pumping!',
+            date: new Date(today.setDate(today.getDate() + 3)), // 3 days from today
+            time: '5:00 PM',
+            admin: admins[1] // Second admin organizes this event
+        },
+        {
+            name: 'Nutrition Workshop',
+            description: 'Learn about balanced diets and meal planning from experts.',
+            date: new Date(today.setDate(today.getDate() + 5)), // 5 days from today
+            time: '2:00 PM',
+            admin: admins[0] // First admin again
+        }
+    ];
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth(); // Get current month (0-11)
+
+    // Fetch the last three plans: premium, gold, and premium-gold
+    const plans = await Plan.find({ planName: { $in: ["Premium", "Gold", "Premium-Gold"] } });
+
+    if (!plans.length) {
+        return res.status(404).json({ msg: "No plans found" });
+    }
+
+    // Calculate discount for each plan
+    const discountedPlans = plans.map(plan => {
+        const discountPercentage = 20; // Example discount of 20%
+        const discountedPrice = plan.planPrice - (plan.planPrice * (discountPercentage / 100));
+
+        // Calculate the offer valid period (15th-20th of next month)
+        const startOfferDate = new Date(currentDate.getFullYear(), currentMonth + 1, 15);
+        const endOfferDate = new Date(currentDate.getFullYear(), currentMonth + 1, 20);
+
+        return {
+            planName: plan.planName,
+            planDuration: plan.planDuration,
+            originalPrice: plan.planPrice,
+            discountedPrice: discountedPrice.toFixed(2), // Format to 2 decimals
+            description: plan.description,
+            offerPeriod: `${startOfferDate.toLocaleDateString()} - ${endOfferDate.toLocaleDateString()}`,
+            logoUrl: plan.planLogoUrl,
+            adminContact: "Dev Vora - 9979976864" // You can fetch this from the Admin collection if needed
+        };
+    });
+
+    res.render('memberfront/memberHome', {
+        admins,
+        memberDetails,
+        user,
+        recentNotification,
+        bills,
+        events,
+        discountedPlans,
+    });
+}
 async function getBill(req, res) {
     const token = req.cookies.uid; // or wherever you're storing it
     if (!token) {

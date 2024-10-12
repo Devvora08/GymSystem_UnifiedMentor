@@ -4,23 +4,577 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/adminHome.css">
     <title>Document</title>
+    <style>
+        body {
+            background: url('/static/gympaper.jpg') no-repeat center center;
+            background-size: cover;
 
+            /* You can also try 'contain' for different results */
+            background-attachment: fixed;
+            /* Change fixed to scroll */
+            height: 100vh;
+            /* Sets the height of the body to 100% of the viewport height */
+            width: 100%;
+            overflow-x: hidden;
+            /* Sets the width of the body to 100% */
+            margin: 0;
+            /* Removes default margin */
+            font-family: 'Arial', sans-serif;
+            /* Sets a clean font family */
+            color: #fff;
+            /* Sets a default text color (optional) */
+        }
+
+        nav {
+            width: 100%;
+            /* Full width of the navbar */
+            padding: 10px 20px;
+            /* Add some padding */
+            display: flex;
+            /* Use flexbox for alignment */
+            justify-content: space-between;
+            /* Space out left and right content */
+            align-items: center;
+            /* Center items vertically */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Semi-transparent black background */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            /* Subtle shadow for depth */
+            position: relative;
+            /* Allow for absolute positioning of child elements if needed */
+            transition: background-color 0.3s ease;
+            /* Smooth background transition */
+        }
+
+        .navbar-container {
+            width: 100%;
+            /* Full width of the navbar container */
+            max-width: 1200px;
+            /* Limit max width */
+            margin: 0 auto;
+            /* Center the navbar */
+            display: flex;
+            /* Use flexbox for layout */
+            justify-content: space-between;
+            /* Space out the left and right sides */
+            align-items: center;
+            /* Center items vertically */
+        }
+
+        .navbar-left {
+            color: #fff;
+            /* Text color */
+            font-size: 1.2em;
+            /* Slightly larger font size for emphasis */
+            font-weight: bold;
+            /* Bold text */
+        }
+
+        .navbar-right a {
+            margin-left: 20px;
+            /* Space between links */
+            color: #fff;
+            /* Link color */
+            text-decoration: none;
+            /* Remove underline */
+            position: relative;
+            /* Position relative for hover effect */
+            font-size: 1em;
+            /* Standard font size */
+            transition: color 0.3s ease, transform 0.3s ease;
+            /* Smooth color and transform transition */
+        }
+
+        .navbar-right a:hover {
+            color: #ffd700;
+            /* Gold color on hover for links */
+            transform: scale(1.1);
+            /* Slightly enlarge the link on hover */
+        }
+
+        .navbar-right a::after {
+            content: '';
+            /* Pseudo-element for hover underline */
+            display: block;
+            height: 2px;
+            /* Height of the underline */
+            background: #ffd700;
+            /* Gold color */
+            width: 0;
+            /* Start width */
+            transition: width 0.3s ease;
+            /* Smooth width transition */
+            position: absolute;
+            /* Positioning for underline */
+            bottom: -5px;
+            /* Position under the text */
+            left: 0;
+            /* Align to left */
+        }
+
+        .navbar-right a:hover::after {
+            width: 100%;
+            /* Full width on hover */
+        }
+
+
+        /* Container for the whole events section */
+        .events-container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 80%;
+            font-family: 'Poppins', sans-serif;
+            /* Elegant and modern font */
+        }
+
+        /* Heading style for the events section */
+        .events-container h2 {
+            font-size: 2.8rem;
+            color: #e6e6e6;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Wrapper for all event boxes */
+        .events-wrapper {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        /* Individual event boxes */
+        .event-box {
+            background: rgba(255, 255, 255, 0.15);
+            /* Glassmorphism effect */
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            /* Initially invisible */
+            transform: translateY(30px);
+            /* Slide from below */
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            border-radius: 20px;
+            padding: 25px;
+            width: 300px;
+            margin: 20px;
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+                /* Starts down */
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                /* Moves to original position */
+            }
+        }
+
+        .fade-in {
+
+            animation: fadeInUp 0.8s ease forwards;
+
+        }
+
+        /* Adding a delay for smooth staggered animation */
+        .event-box:nth-child(1) {
+            transition-delay: 0.3s;
+        }
+
+        .event-box:nth-child(2) {
+            transition-delay: 0.5s;
+        }
+
+        .event-box:nth-child(3) {
+            transition-delay: 0.7s;
+        }
+
+        /* Hover effect for event boxes */
+        .event-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+            /* More visible when hovered */
+        }
+
+        /* Event title style */
+        .event-box h3 {
+            font-size: 1.9rem;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        /* Description and timing details */
+        .event-box p {
+            margin: 12px 0;
+            color: #d0d0d0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Timing and date */
+        .timing {
+            margin-top: 15px;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #b0b0b0;
+        }
+
+        /* Enrollment info with admin contact */
+        .enroll-info {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            color: #e6e6e6;
+            transition: background 0.3s ease;
+        }
+
+        /* Enroll link */
+        .enroll-info a {
+            display: inline-block;
+            margin-top: 6px;
+            color: #00c4ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        /* Hover effect on enroll link */
+        .enroll-info a:hover {
+            color: #00aaff;
+            text-decoration: underline;
+        }
+
+        /* Enroll info hover effect */
+        .enroll-info:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Smooth transition effect */
+        * {
+            transition: all 0.3s ease;
+        }
+
+        .notification-container {
+            margin: 2rem auto;
+            padding: 1.5rem;
+            max-width: 600px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .notification-box {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .notification-box h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            margin-top: -5px;
+        }
+
+        .notification-box p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .notification-box .notification-date {
+            font-size: 0.9rem;
+            color: #ccc;
+            text-align: right;
+        }
+
+        .notification-link {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #ffcc00;
+            text-align: left;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .notification-link:hover {
+            color: #fff;
+            text-decoration: solid;
+        }
+
+        .plan-offers-container {
+            margin: 3rem auto;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .plans-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .plan-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 300px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .plan-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-logo {
+            max-width: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .plan-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-box .plan-duration,
+        .plan-description,
+        .original-price,
+        .discounted-price,
+        .offer-period,
+        .contact-admin {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .discounted-price {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .plan-offers-container h2 {
+            font-size: 2.5rem;
+            /* Larger font size for emphasis */
+            color: #ffcc00;
+            /* Golden color to match the theme */
+            margin-bottom: 1.5rem;
+            /* Space below the heading */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            /* Subtle shadow for depth */
+            font-family: 'Arial', sans-serif;
+            /* Font family for consistency */
+            transition: color 0.3s ease;
+            /* Smooth transition for color changes */
+        }
+
+        .plan-offers-container h2:hover {
+            color: #fff;
+            /* Change color on hover for effect */
+        }
+
+        .bill-table-container {
+            background: rgba(255, 255, 255, 0.1);
+            /* Light background with transparency */
+            backdrop-filter: blur(10px);
+            /* Blurring effect behind */
+            border-radius: 10px;
+            /* Rounded corners */
+            padding: 20px;
+            /* Padding inside the container */
+            margin: 20px auto;
+            /* Centering the container */
+            width: 80%;
+            /* Width of the container */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            /* Shadow effect */
+        }
+
+        .bill-table {
+            width: 100%;
+            /* Full width of the container */
+            border-collapse: collapse;
+            /* Collapse borders */
+            margin-top: 10px;
+            /* Space between heading and table */
+        }
+
+        .bill-table th,
+        .bill-table td {
+            padding: 15px;
+            /* Padding for table cells */
+            text-align: left;
+            /* Align text to the left */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            /* Light border for rows */
+        }
+
+        .bill-table th {
+            background: rgba(255, 255, 255, 0.3);
+            /* Slightly opaque background for header */
+            color: #333;
+            /* Dark text color for better readability */
+        }
+
+        .bill-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            /* Highlight row on hover */
+        }
+    </style>
 </head>
 
 <body>
-    <h1>welcome member!!! you have logged in !!!</h1>
+    <nav>
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <span>Welcome, <%= user.name %></span>
+            </div>
+            <div class="navbar-right">
+                <a href="/member/details">Details</a>
+                <a href="/member/bill">Bill</a>
+                <a href="/member/notification">Notification</a>
+                <a href="/member/shop">Shop</a>
+                <a href="/member/cancelmember">Cancel Membership</a>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="events-container">
+        <h2>Upcoming Events & Classes</h2>
+        <div class="events-wrapper">
+            <% events.forEach(event=> { %>
+                <div class="event-box">
+                    <h3>
+                        <%= event.name %>
+                    </h3>
+                    <p>
+                        <%= event.description %>
+                    </p>
+                    <p class="timing">Date: <%= event.date.toDateString() %> | Time: <%= event.time %>
+                    </p>
+                    <div class="enroll-info">
+                        <p>Contact Admin: <%= event.admin.name %>
+                        </p>
+                        <a href="mailto:<%= event.admin.email %>">Enroll Now</a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+    <div class="notification-container">
+        <h2>Recent Notification</h2>
+        <% if (recentNotification) { %>
+            <div class="notification-box">
+                <h3>
+                    <%= recentNotification.title %>
+                </h3>
+                <p>
+                    <%= recentNotification.content %>
+                </p>
+                <span class="notification-date">
+                    Posted on: <%= recentNotification.datePosted %>
+                </span><br>
+                <!-- Add the "Go to Notifications" link here -->
+                <a href="/member/notification" class="notification-link">Go to Notifications</a>
+            </div>
+            <% } else { %>
+                <p>No recent notifications</p>
+                <% } %>
+    </div>
+    <div class="plan-offers-container">
+        <h2>Special Offers on Membership Plans</h2><br><br>
+        <div class="plans-wrapper">
+            <% discountedPlans.forEach(plan=> { %>
+                <div class="plan-box">
+                    <img src="<%= plan.logoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
+                    <h3>
+                        <%= plan.planName %> Plan
+                    </h3>
+                    <p class="plan-duration">Duration: <%= plan.planDuration %>
+                    </p>
+                    <p class="plan-description">
+                        <%= plan.description %>
+                    </p>
+                    <p class="original-price">Original Price: Rs.<%= plan.originalPrice %>
+                    </p>
+                    <p class="discounted-price">Discounted Price: Rs.<%= plan.discountedPrice %>
+                    </p>
+                    <p class="offer-period">Offer valid from: <%= plan.offerPeriod %>
+                    </p>
+                    <p class="contact-admin">Contact admin: <%= plan.adminContact %>
+                    </p>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+    <div class="bill-table-container">
+        <h2>Billing Information</h2>
+        <table class="bill-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Bill Amount</th>
+                    <th>Bill Due</th>
+                    <th>Bill Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% bills.forEach(bill=> { %>
+                    <tr>
+                        <td>
+                            <%= bill.username %>
+                        </td>
+                        <td>
+                            <%= bill.amount %>
+                        </td>
+                        <td>
+                            <%= new Date(bill.dueDate).toLocaleString('default', { month: 'long' , year: 'numeric' }) %>
+                        </td>
 
-    <ul>
-        <li><button onclick="window.location.href='/member/details'">Details</button></li>
-        <li><button onclick="window.location.href='/member/bill'">Bill</button></li>
-        <li><button onclick="window.location.href='/member/notification'">Notification</button></li>
-        <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
-        <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
-    </ul>
+                        <td>
+                            <%= bill.status %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
 
-    <script src="/static/jsfiles/admin.js"></script>
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                const eventBoxes = document.querySelectorAll('.event-box');
+                eventBoxes.forEach((box) => {
+                    box.classList.add('fade-in');
+                });
+            }, 300); // Slight delay before animation starts
+        };
+    </script>
 </body>
 
 </html>

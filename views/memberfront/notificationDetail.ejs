@@ -1,25 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css"> <!-- Link to your CSS file -->
     <title>Notification Detail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1c002b, #2a003d);
+            color: white;
+            margin: 0;
+            padding: 0;
+            transition: background 0.5s ease;
+        }
+
+        /* Container for notification detail */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            padding: 20px;
+        }
+
+        /* Notification detail box */
+        .notification-detail-box {
+            background-color: rgba(35, 0, 55, 0.9);
+            /* Dark purple */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .notification-detail-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .notification-detail-box h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .notification-box {
+            background-color: rgba(25, 0, 40, 1);
+            /* Even darker purple for the box */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+
+        .notification-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .notification-box .message {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .notification-box .date {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Checkbox container to space out and style */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #5c1f85;
+            /* Checkbox color */
+            border: 2px solid #d2b3ff;
+            /* Border to match the theme */
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked {
+            background-color: #d2b3ff;
+            /* Lighter purple when checked */
+            border-color: #5c1f85;
+        }
+
+        .checkbox-container label {
+            font-size: 1rem;
+            color: #d2b3ff;
+        }
+
+        /* Back button styling */
+        .back-button {
+            background-color: #5c1f85;
+            /* A complementary purple */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #7e35b0;
+            /* Slightly lighter on hover */
+            transform: translateY(-5px);
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .notification-detail-box {
+                padding: 30px;
+            }
+
+            .notification-box {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="notification-detail">
-        <h1>Notification Detail</h1>
-        <div class="notification-box">
-            <h2><%= notification.title %></h2> <!-- Assuming there's a title field -->
-            <p><%= notification.message %></p> <!-- Display the notification message -->
-            <p>Date: <%= notification.datePosted.toLocaleString() %></p> <!-- Assuming there's a date field -->
-            <p>Status: <%= notification.read %></p> <!-- Display read/unread status -->
-            <input type="checkbox" name="notificationIds" value="<%= notification._id %>" <%= notification.read === 'read' ? 'checked' : '' %>>
-            <label for="notificationIds">Mark as read</label>
-            <form action="/member/notification/:id" method="POST">
-                <button type="submit" class="btn">Go Back</button>
-            </form>
+    <div class="container">
+        <div class="notification-detail-box">
+            <h1>Notification Detail</h1>
+            <div class="notification-box">
+                <h2>
+                    <%= notification.title %>
+                </h2>
+                <p class="message">
+                    <%= notification.message %>
+                </p>
+                <p class="date">Date Posted: <%= notification.datePosted.toLocaleString() %>
+                </p>
+                <p>Status: <%= notification.read==='read' ? 'Read' : 'Unread' %>
+                </p>
+
+                <!-- Checkbox for marking as read -->
+                <div class="checkbox-container">
+                    <input type="checkbox" name="notificationIds" value="<%= notification._id %>"
+                        <%=notification.read==='read' ? 'checked' : '' %>>
+                    <label for="notificationIds">Mark as read</label>
+                </div>
+
+                <!-- Go Back button -->
+                <form action="/member/notification/:id" method="POST">
+                    <button type="submit" class="back-button">Go Back</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
+
 </html>

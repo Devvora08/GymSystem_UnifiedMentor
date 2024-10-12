@@ -146,3 +146,13 @@ Support Contact: Information on how to contact the gym for issues related to mem
 Member Achievements: Display badges or milestones (e.g., 100 visits, 1-year member).
 Community Challenges: Show details on any gym challenges (e.g., running a marathon, most steps in a month) and their progress.
 Leaderboard: If your gym has a competitive community, display where they rank in fitness challenges or activities.
+
+
+
+
+member home page style 
+so it has similar navbar, on left is the welcome -"membername", with links on right side, then comes upcoming events and classes, now it doesnt have to be from collection or somewhere, it will be simply made up,
+ a container having 3 boxes in a row, with timings, admin contacts for joining, and details about it, then comes the recent notifications, only the most recent one in a well
+  designed container below these event section, then after this comes the new offer like scheme, that displays the premium, gold, 
+  and premium-gold plans from my plan-collection with discounts and offer cuts and all, with a live timer in each box, similar like events box, and at last comes my membership status, paid/unpaid with a small bills reciept.
+   The body background is an image of a gym wallpaper i want to display, with all these boxes having cool glass morphs colors that show the background well. just review my idea . no code yet

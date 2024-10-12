@@ -48,7 +48,7 @@ async function getBills(req, res) {
                 billDetails // Add extra details from Bills
             };
         }); 
-        console.log(membersWithDetails);
+        //console.log(membersWithDetails);
        
         res.render('adminfront/bill', { membersWithDetails });
     } catch (error) {

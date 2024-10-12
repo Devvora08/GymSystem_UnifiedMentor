@@ -1,37 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
     <style>
-        .box{
-            background-color: green;
+        /* Global styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1c002b, #2a003d);
+            color: white;
+            margin: 0;
+            padding: 0;
+            transition: background 0.5s ease;
+        }
+
+        /* Navbar styling */
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #14001a;
+            /* Darker, blackish purple */
+            padding: 15px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar ul li {
+            margin: 0 20px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 12px 0;
+            font-size: 16px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #d2b3ff;
+            transform: translateY(-3px);
+        }
+
+        /* Container for notifications */
+        .container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            transition: color 0.5s ease;
+        }
+
+        /* Notifications grid layout */
+        .notifications-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 per row */
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .notification-box {
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .notification-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box {
+            background-color: rgba(35, 0, 55, 0.9);
+            /* Darker relative of purple */
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            background-color: rgba(25, 0, 40, 1);
+            /* Even darker on hover */
+        }
+
+        /* Responsive layout */
+        @media (max-width: 900px) {
+            .notifications-grid {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2 per row on smaller screens */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .notifications-grid {
+                grid-template-columns: 1fr;
+                /* 1 per row on mobile */
+            }
         }
     </style>
 </head>
-<body>
-    <h1>welcome to member/notification</h1>
-    <ul>
-        <li><button onclick="window.location.href='/member/details'">Details</button></li>
-        <li><button onclick="window.location.href='/member/bill'">Bill</button></li>
-        <li><button onclick="window.location.href='/member/home'">Home</button></li>
-        <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
-        <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
-    </ul>
 
-    <% if (notifications && notifications.length > 0) { %>
-        <% for (let i = notifications.length - 1; i >= 0; i--) { %>
-            <a href="/member/notification/<%= notifications[i]._id %>">
-                <div class="box">
-                    <p><%= notifications[i].message %></p>
-                    <p>Date: <%= notifications[i].datePosted %></p>
-                </div>
-            </a>
-        <% } %>
-    <% } else { %>
-        <p>No notifications available.</p>
-    <% } %>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="/member/details">Details</a></li>
+            <li><a href="/member/bill">Bill</a></li>
+            <li><a href="/member/home">Home</a></li>
+            <li><a href="/member/shop">Shop</a></li>
+            <li><a href="/member/cancelmember">Cancel Membership</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Notifications</h1>
+
+        <div class="notifications-grid">
+            <% if (notifications && notifications.length> 0) { %>
+                <% for (let i=notifications.length - 1; i>= 0; i--) { %>
+                    <a href="/member/notification/<%= notifications[i]._id %>" class="notification-box">
+                        <div class="box">
+                           <h2>
+                                <%= notifications[i].message %>
+                           </h2>
+                            <p>Date: <%= notifications[i].datePosted %>
+                            </p>
+                        </div>
+                    </a>
+                    <% } %>
+                        <% } else { %>
+                            <p>No notifications available.</p>
+                            <% } %>
+        </div>
+    </div>
 </body>
+
+
+
 </html>

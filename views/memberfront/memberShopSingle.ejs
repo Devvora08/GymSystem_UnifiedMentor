@@ -1,24 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <h1>this is a specific product to view view</h1>
-    <div class="product-detail">
-        <h1><%= shopitm.itemName %></h1>
-        <img src="<%= shopitm.imageUrl %>" alt="<%= shopitm.itemName %>" class="product-image">
-        <p><strong>Description:</strong> <%= shopitm.description %></p>
-        <p><strong>Price:</strong> Rs.<%= shopitm.price %></p>
-        <p><strong>In Stock:</strong> <%= shopitm.stockQuantity %> items</p>
-        <form action="/member/shop/<%= shopitm._id %>" method="POST">
-            <input type="hidden" name="productName" value="<%= shopitm.itemName %>">
-            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-        </form>
+    <style>
+        html,
+        body {
+            height: 100%;
+            /* Ensure the HTML and body elements take full height */
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at left, #232442, #1a1b35 70%, #121227);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
 
-        <a href="/member/shop" class="back-to-shop">Back to Shop</a>
+        .product-detail {
+            min-height: 100vh;
+            /* Make sure the content takes at least the full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+            /* Include padding in the element's total width and height */
+        }
+
+        .product-info {
+            display: flex;
+            gap: 40px;
+            max-width: 1100px;
+            align-items: center;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            /* Transparent background for contrast */
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.5);
+            /* Elevated shadow */
+            transform: scale(1);
+            /* Initial scale */
+            transition: transform 0.4s ease;
+            /* Smooth animation */
+        }
+
+        .product-info:hover {
+            transform: scale(1.03);
+            /* Slight hover scale effect */
+        }
+
+        .product-image {
+            max-width: 350px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.6);
+            /* Stronger shadow for image */
+            transition: transform 0.3s ease;
+            /* Image hover effect */
+        }
+
+        .product-image:hover {
+            transform: translateY(-10px);
+            /* Lift the image slightly on hover */
+        }
+
+        .product-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            max-width: 600px;
+            color: #f0f0f0;
+        }
+
+        .product-content h1 {
+            font-size: 42px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(to right, #81baa0, #46a39c);
+            -webkit-background-clip: text;
+            color: transparent;
+            /* Gradient text */
+        }
+
+        .product-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            color: #ddd;
+            /* Softer color for paragraphs */
+        }
+
+        .add-to-cart-btn {
+            background-color: #81baa0;
+            border: none;
+            color: #fff;
+            padding: 12px 35px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+            /* Elevated button */
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #46a39c;
+            transform: translateY(-5px);
+            /* Slight lift on hover */
+        }
+
+        .back-to-shop {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #81baa0;
+            padding: 12px 25px;
+            border: 2px solid #81baa0;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            /* Subtle button shadow */
+        }
+
+        .back-to-shop:hover {
+            background-color: #81baa0;
+            color: #fff;
+            border-color: #46a39c;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="product-detail">
+        <div class="product-info">
+            <img src="<%= shopitm.imageUrl %>" alt="<%= shopitm.itemName %>" class="product-image">
+            <div class="product-content">
+                <h1>
+                    <%= shopitm.itemName %>
+                </h1>
+                <p><strong>Description:</strong>
+                    <%= shopitm.description %>
+                </p>
+                <p><strong>Price:</strong> Rs.<%= shopitm.price %>
+                </p>
+                <p><strong>In Stock:</strong>
+                    <%= shopitm.stockQuantity %> items
+                </p>
+                <form action="/member/shop/<%= shopitm._id %>" method="POST">
+                    <input type="hidden" name="productName" value="<%= shopitm.itemName %>">
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </form>
+                <a href="/member/shop" class="back-to-shop">Back to Shop</a>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>

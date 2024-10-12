@@ -1,61 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background: linear-gradient(135deg, #314a3f, #1d332b);
+            /* Darker elegant green gradient */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Header/Navbar Styling */
+        header {
+            width: 100%;
+            background-color: #36454F;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .navbar li {
+            margin: 0 15px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #81baa0;
+            /* Subtle hover effect */
+        }
+
+        /* Main Content Container */
+        .member-details-container {
+            width: 80%;
+            max-width: 900px;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #36454F;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+            text-align: left;
+        }
+
+        /* Member Info Styling */
+        .member-info,
+        .recent-notification {
+            margin-bottom: 20px;
+        }
+
+        .member-info p,
+        .recent-notification p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Cart Section */
+        .cart {
+            border-top: 2px solid #81baa0;
+            padding-top: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .item-details h4 {
+            margin: 0;
+        }
+
+        .item-details p {
+            margin: 5px 0 0;
+        }
+
+        /* Remove Button */
+        .remove-item-form {
+            margin-left: 20px;
+        }
+
+        .remove-btn {
+            padding: 5px 10px;
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background-color: #ff3333;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>welcome to member details</h1>
-    <ul>
-        <li><button onclick="window.location.href='/member/home'">Home</button></li>
-        <li><button onclick="window.location.href='/member/bill'">Bill</button></li>
-        <li><button onclick="window.location.href='/member/notification'">Notification</button></li>
-        <li><button onclick="window.location.href='/member/shop'">Shop</button></li>
-        <li><button onclick="window.location.href='/member/cancelmember'">Cancel Membership</button></li>
-    </ul>
+    <header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="/member/home">Home</a></li>
+                <li><a href="/member/bill">Bill</a></li>
+                <li><a href="/member/notification">Notification</a></li>
+                <li><a href="/member/shop">Shop</a></li>
+                <li><a href="/member/cancelmember">Cancel Membership</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Member Name: <%= user.name %></h2>
-<p>Email: <%= user.email %></p>
-<p>Membership ID: <%= memberDetails.membershipPlan %></p>
-<p>Membership Plan: <%= memberDetails.membershipPlan %></p>
-<p>Phone Number: <%= memberDetails.mobileNumber %></p>
-<p>Plan Duration: <%= memberDetails.planDuration %></p>
-<p>Plan Description: <%= myPlan.description %></p>
-<p>Plan Price: <%= myPlan.planPrice %></p>
-<p>Age: <%= memberDetails.age %></p>
-<p>Join Date: <%= memberDetails.joinDate %></p>
-<div>
-    <h2>Recent Notification: <%= lastMsg.title %></h2>
-    <p>Message: <%= lastMsg.message %></p>
-    <p>Posted On: <%= lastMsg.datePosted %></p>
-</div>
-<div>
-    <% if (cartItems.length > 0) { %>
-        <h1>Cart-Items</h1>
-        <% cartItems.forEach(function(item) { %>
-            <div class="cart-item">
-                <!-- Item Image -->
-                <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="item-image">
-                
-                <!-- Item Details -->
-                <div class="item-details">
-                    <h4><%= item.itemName %></h4>
-                    <p>Price: Rs.<%= item.price %></p>
-                </div>
-                <div>
-                    <form class="remove-item-form" method="POST" action="/member/details">
-                        <input type="hidden" class="item-id" name="itemId" value="<%= item._id %>">
-                        <button type="submit" class="remove-btn">Remove Item</button>
-                    </form>
-                </div>
-            </div>
-        <% }) %>
-    <% } else { %>
-        <p>Your cart is empty. Please add items to your cart.</p>
-    <% } %>
-</div>
+    <main class="member-details-container">
+        <h1>Welcome to Member Details</h1>
+        <section class="member-info">
+            <h2>Member Name: <%= user.name %>
+            </h2>
+            <p>Email: <%= user.email %>
+            </p>
+            <p>Membership ID: <%= memberDetails.membershipId %>
+            </p>
+            <p>Membership Plan: <%= memberDetails.membershipPlan %>
+            </p>
+            <p>Phone Number: <%= memberDetails.mobileNumber %>
+            </p>
+            <p>Plan Duration: <%= memberDetails.planDuration %>
+            </p>
+            <p>Plan Description: <%= myPlan.description %>
+            </p>
+            <p>Plan Price: Rs.<%= myPlan.planPrice %>
+            </p>
+            <p>Age: <%= memberDetails.age %>
+            </p>
+            <p>Join Date: <%= memberDetails.joinDate %>
+            </p>
+        </section>
 
+        <section class="recent-notification">
+            <h2>Recent Notification: <%= lastMsg.title %>
+            </h2>
+            <p>Message: <%= lastMsg.message %>
+            </p>
+            <p>Posted On: <%= lastMsg.datePosted %>
+            </p>
+        </section>
 
+        <section class="cart">
+            <% if (cartItems.length> 0) { %>
+                <h2>Cart Items</h2>
+                <% cartItems.forEach(function(item) { %>
+                    <div class="cart-item">
+                        <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="item-image">
+                        <div class="item-details">
+                            <h4>
+                                <%= item.itemName %>
+                            </h4>
+                            <p>Price: Rs.<%= item.price %>
+                            </p>
+                        </div>
+                        <form class="remove-item-form" method="POST" action="/member/details">
+                            <input type="hidden" name="itemId" value="<%= item._id %>">
+                            <button type="submit" class="remove-btn">Remove</button>
+                        </form>
+                    </div>
+                    <% }) %>
+                        <% } else { %>
+                            <p>Your cart is empty. Please add items to your cart.</p>
+                            <% } %>
+        </section>
+    </main>
 </body>
+
 </html>

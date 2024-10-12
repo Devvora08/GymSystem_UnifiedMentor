@@ -45,7 +45,7 @@
                 <% health.forEach(function(item) { %>
                     <div class="item">
                         <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
-                        <p>Image URL: <%= item.imageUrl %></p> <!-- Debugging output -->
+                        <p>Image URL: <%= item.imageUrl %></p>
                         <h3><%= item.itemName %></h3>
                         <p><%= item.description %></p>
                         <p>Price: Rs.<%= item.price %></p>
@@ -57,12 +57,12 @@
         </div>
     
         <div class="category-section">
-            <!-- Clothing Section -->
+          
             <h2>Equipments</h2>
             <div class="equipment-items" style="display: flex; flex-direction: row;">
                 <% equipment.forEach(function(item) { %>
                     <div class="item">
-                        <!-- Use item.imageUrl instead of item.imgUrl -->
+                      
                         <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
                         <h3>
                             <%= item.itemName %>
