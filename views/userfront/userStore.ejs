@@ -1,91 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Shop - Clothing</title>
+    <link rel="stylesheet" href="/static/css/membershop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-    <ul>
-        <li><button onclick="window.location.href='/user/plans'">Plans</button></li>
-        <li><button onclick="window.location.href='/user/membership'">Become Member</button></li>
-        <li><button onclick="window.location.href='/user/home'">Home</button></li>
-    </ul><br><br>
-    <h1>hello this is the store</h1>      <!--     as a user role, only products can be seen, no cart functionality, no specific product watch -->
-    <div class="category-section">
-        <h2>Clothing & Accessories</h2>
-        <div class="clothing-items" style="display: flex; flex-direction: row;">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/user/membership">Membership</a></li>
+                <li><a href="/user/plans">Plans</a></li>
+                <li><a href="/user/home">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="carousel">
+        <div class="list">
             <% clothing.forEach(function(item) { %>
                 <div class="item">
-                    <!-- Use item.imageUrl instead of item.imgUrl -->
-                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
-                    <h3>
-                        <%= item.itemName %>
-                    </h3>
-                    <p>Image URL: <%= item.imageUrl %></p>
-                    <p>
-                        <%= item.description %>
-                    </p>
-                    <p>Price: Rs.<%= item.price %>
-                    </p>
-                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <figure>
+                        <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>">
+                    </figure>
+                    <div class="content">
+                        <p class="category">
+                            <%= item.category %>
+                        </p>
+                        <h2>
+                            <%= item.itemName %>
+                        </h2>
+                        <p class="description">
+                            <%= item.description %>
+                        </p>
+                    </div>
                 </div>
                 <% }); %>
         </div>
-    </div>
 
-    <div class="category-section">
-        <h2>Health and Wellness</h2>
-        <div class="health-items" style="display: flex; flex-direction: row;">
-            <% health.forEach(function(item) { %>
-                <div class="item">
-                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
-                    <p>Image URL: <%= item.imageUrl %></p> <!-- Debugging output -->
-                    <h3><%= item.itemName %></h3>
-                    <p><%= item.description %></p>
-                    <p>Price: Rs.<%= item.price %></p>
-                    <p>In Stock: <%= item.stockQuantity %> items</p>
-                </div>
-            <% }); %>
+        <div class="arrows">
+            <button id="prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="next"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
-    </div>
 
-    <div class="category-section">
-        <!-- Clothing Section -->
-        <h2>Equipments</h2>
-        <div class="equipment-items" style="display: flex; flex-direction: row;">
+        <div class="indicators">
+            <div class="number">01</div>
+            <ul>
+                <% for (let i=0; i < clothing.length; i++) { %>
+                    <li class="<%= i === 0 ? 'active' : '' %>"></li>
+                    <% } %>
+            </ul>
+        </div>
+    </section>
+
+    <section class="carousel">
+        <div class="list">
             <% equipment.forEach(function(item) { %>
                 <div class="item">
-                    <!-- Use item.imageUrl instead of item.imgUrl -->
-                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
-                    <h3>
-                        <%= item.itemName %>
-                    </h3>
-                    <p>
-                        <%= item.description %>
-                    </p>
-                    <p>Price: Rs.<%= item.price %>
-                    </p>
-                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <figure>
+                        <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>">
+                    </figure>
+                    <div class="content">
+                        <p class="category">
+                            <%= item.category %>
+                        </p>
+                        <h2>
+                            <%= item.itemName %>
+                        </h2>
+                        <p class="description">
+                            <%= item.description %>
+                        </p>
+                    </div>
                 </div>
                 <% }); %>
         </div>
-    </div>
 
-    <div class="category-section">
-        <h2>Supplements</h2>
-        <div class="supplement-items" style="display: flex; flex-direction: row;">
+        <div class="arrows">
+            <button id="prev-equipment"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="next-equipment"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="indicators">
+            <div class="number">01</div>
+            <ul>
+                <% for (let i=0; i < clothing.length; i++) { %>
+                    <li class="<%= i === 0 ? 'active' : '' %>"></li>
+                    <% } %>
+            </ul>
+        </div>
+    </section>
+
+    <section class="carousel">
+        <div class="list">
+            <% health.forEach(function(item) { %>
+                <div class="item">
+                    <figure>
+                        <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>">
+                    </figure>
+                    <div class="content">
+                        <p class="category">
+                            <%= item.category %>
+                        </p>
+                        <h2>
+                            <%= item.itemName %>
+                        </h2>
+                        <p class="description">
+                            <%= item.description %>
+                        </p>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+
+        <div class="arrows">
+            <button id="prev-health"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="next-health"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="indicators">
+            <div class="number">01</div>
+            <ul>
+                <% for (let i=0; i < clothing.length; i++) { %>
+                    <li class="<%= i === 0 ? 'active' : '' %>"></li>
+                    <% } %>
+            </ul>
+        </div>
+    </section>
+
+    <section class="carousel">
+        <div class="list">
             <% supplement.forEach(function(item) { %>
                 <div class="item">
-                    <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="product-image">
-                    <p>Image URL: <%= item.imageUrl %></p> <!-- Debugging output -->
-                    <h3><%= item.itemName %></h3>
-                    <p><%= item.description %></p>
-                    <p>Price: Rs.<%= item.price %></p>
-                    <p>In Stock: <%= item.stockQuantity %> items</p>
+                    <figure>
+                        <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>">
+                    </figure>
+                    <div class="content">
+                        <p class="category">
+                            <%= item.category %>
+                        </p>
+                        <h2>
+                            <%= item.itemName %>
+                        </h2>
+                        <p class="description">
+                            <%= item.description %>
+                        </p>
+                    </div>
                 </div>
-            <% }); %>
+                <% }); %>
         </div>
-    </div>
+
+        <div class="arrows">
+            <button id="prev-supplement"><i class="fa-solid fa-chevron-left"></i></button>
+            <button id="next-supplement"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="indicators">
+            <div class="number">01</div>
+            <ul>
+                <% for (let i=0; i < clothing.length; i++) { %>
+                    <li class="<%= i === 0 ? 'active' : '' %>"></li>
+                    <% } %>
+            </ul>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousels = document.querySelectorAll('.carousel');
+
+            carousels.forEach((carousel) => {
+                let prevBtn = carousel.querySelector('.arrows button[id^="prev"]');
+                let nextBtn = carousel.querySelector('.arrows button[id^="next"]');
+                let items = carousel.querySelectorAll('.list .item');
+                let indicator = carousel.querySelector('.indicators');
+                let dots = indicator.querySelectorAll('.indicators ul li');
+
+                let active = 0;
+                let firstPosition = 0;
+                let lastPosition = items.length - 1;
+                let autoPlay;
+
+                const startAutoPlay = () => {
+                    clearInterval(autoPlay);
+                    autoPlay = setInterval(() => {
+                        nextBtn.click();
+                    }, 5000);
+                };
+                startAutoPlay();
+
+                const setSlider = () => {
+                    let itemActiveOld = carousel.querySelector('.list .item.active');
+                    if (itemActiveOld) itemActiveOld.classList.remove('active');
+                    items[active].classList.add('active');
+
+                    let dotActiveOld = indicator.querySelector('.indicators ul li.active');
+                    if (dotActiveOld) dotActiveOld.classList.remove('active');
+                    dots[active].classList.add('active');
+
+                    indicator.querySelector('.number').innerText = '0' + (active + 1);
+                    startAutoPlay();
+                };
+                setSlider();
+
+                nextBtn.onclick = () => {
+                    active = active + 1 > lastPosition ? 0 : active + 1;
+                    carousel.style.setProperty('--calculation', 1);
+                    setSlider();
+                };
+
+                prevBtn.onclick = () => {
+                    active = active - 1 < firstPosition ? lastPosition : active - 1;
+                    carousel.style.setProperty('--calculation', -1);
+                    setSlider();
+                    clearInterval(autoPlay);
+                    autoPlay = setInterval(() => {
+                        nextBtn.click();
+                    }, 5000);
+                };
+
+                dots.forEach((item, position) => {
+                    item.onclick = () => {
+                        active = position;
+                        setSlider();
+                    };
+                });
+            });
+        });
+
+    </script>
 </body>
+
 </html>

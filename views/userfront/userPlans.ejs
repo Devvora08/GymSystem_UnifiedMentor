@@ -4,53 +4,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Plans Page</title>
     <style>
-        .plan-logo {
-            width: 100px;
-            /* Adjust based on your design */
-            height: auto;
-            /* Keeps the aspect ratio intact */
-            margin-bottom: 10px;
-            /* Adds some space between the image and the plan name */
+        body {
+            background: radial-gradient(circle, #ffffff 10%, #0f0f2e 100%);
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        h1 {
+            margin-top: 50px;
+            text-align: center;
+            color: black;
+        }
+
+        nav {
+            margin: 20px 0;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            justify-content: center;
+        }
+
+        ul li {
+            margin: 0 15px;
+        }
+
+        a {
+            color: #150024;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        a:hover {
+            color: #8a2be2;
+            transform: scale(1.05);
+        }
+
+        .plans {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            justify-content: center;
+            margin-top: 20px;
+            opacity: 0; /* Initially hidden for transition */
+            transform: translateY(30px); /* Move down for transition */
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Transition for smooth entry */
         }
 
         .plan-card {
+            background-color: #16213e;
             border: 1px solid #ccc;
             padding: 20px;
             margin: 10px;
             border-radius: 8px;
             text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            width: 250px; /* Fixed width for all cards */
+            height: 350px; /* Fixed height for all cards */
+            transition: transform 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: scale(1.05);
+        }
+
+        .plan-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: #8a2be2; /* Highlight color for specific text */
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <h1>hello here are plans to see for enrolling</h1>
-    <ul>
-        <li><button onclick="window.location.href='/user/home'">Home</button></li>
-        <li><button onclick="window.location.href='/user/membership'">Become Member</button></li>
-        <li><button onclick="window.location.href='/user/store'">Shop</button></li>
-    </ul>
-    <div class="plans" style="display: flex; flex-direction: row;">
-        <% allPlans.forEach(plan=> { %>
+    <nav>
+        <ul>
+            <li><a href="/user/home">Home</a></li>
+            <li><a href="/user/membership">Become Member</a></li>
+            <li><a href="/user/store">Shop</a></li>
+        </ul>
+    </nav>
+    <h1>Checkout our Plans</h1>
+    <div class="plans" id="plansContainer">
+        <% allPlans.forEach(plan => { %>
             <div class="plan-card">
                 <img src="<%= plan.planLogoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
-                <h2>
-                    <%= plan.planName %>
-                </h2>
-                <p><strong>Duration:</strong>
-                    <%= plan.planDuration %>
-                </p>
-                <p><strong>Price:</strong> ₹<%= plan.planPrice %>
-                </p>
-                <p>
-                    <%= plan.description %>
-                </p>
+                <h2 class="highlight"><%= plan.planName %></h2>
+                <p><strong>Duration:</strong> <span class="highlight"><%= plan.planDuration %></span></p>
+                <p><strong>Price:</strong> <span class="highlight">₹<%= plan.planPrice %></span></p>
+                <p><%= plan.description %></p>
             </div>
-            <% }) %>
+        <% }) %>
     </div>
+
+    <script>
+        window.onload = function() {
+            const plansContainer = document.getElementById('plansContainer');
+            plansContainer.style.opacity = 1; // Fade in
+            plansContainer.style.transform = 'translateY(0)'; // Slide up
+        }
+    </script>
 </body>
 
 </html>

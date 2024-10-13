@@ -4,81 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Members Page</title>
     <style>
+        /* Overall Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, #4e2253, #1b0b1e); /* Dark purple circular gradient */
+            color: #ffffff; /* White text color for contrast */
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        /* Navbar Styles */
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #5a1a5e; /* Slightly lighter dark purple on hover */
+        }
+
+        /* Header Styles */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em; /* Larger font for the heading */
+            color: #ffffff; /* Keep the heading white */
+        }
+
+        /* Container for Member Cards */
+        #members-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping of boxes */
+            justify-content: center; /* Center align the cards */
+        }
+
+        /* Member Card Styles */
         .member-card {
-            border: 1px solid #ddd;
-            /* Light border */
-            border-radius: 8px;
-            /* Rounded corners */
-            padding: 15px;
-            /* Padding inside the card */
-            margin: 10px;
-            /* Space between cards */
-            background-color: #f9f9f9;
-            /* Light background */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            /* Slight shadow for depth */
-            transition: transform 0.2s;
-            /* Smooth transition for hover effect */
+            border: 1px solid #555; /* Darker border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 15px; /* Padding inside the card */
+            margin: 10px; /* Space between cards */
+            background-color: #170b17; /* Darker purple background for cards */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+            transition: transform 0.3s, opacity 0.3s; /* Smooth transition for hover effect */
+            opacity: 0; /* Initially hidden for transition */
+            transform: translateY(20px); /* Start position for transition */
+            flex: 0 0 300px; /* Set card width (300px) and allow them to grow */
         }
 
-        .member-card:hover {
-            transform: scale(1.02);
-            /* Slightly grow on hover */
-        }
-
+        /* Member Name Styles */
         .member-name {
-            font-size: 1.5em;
-            /* Larger font for name */
-            color: #333;
-            /* Darker text color */
-            margin-bottom: 10px;
-            /* Space below the name */
+            font-size: 1.5em; /* Larger font for name */
+            color: #ffffff; /* Keep member names white for contrast */
+            margin-bottom: 10px; /* Space below the name */
         }
 
         strong {
-            color: #555;
-            /* Slightly darker color for labels */
+            color: #ddd; /* Slightly lighter color for labels */
+        }
+
+        /* Load Animation */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .member-card.show {
+            opacity: 1; /* Fade in effect */
+            animation: fadeInUp 0.5s forwards; /* Animation for cards */
         }
     </style>
 </head>
 
 <body>
-    <h1>list of all members here</h1>
-    <li><button onclick="window.location.href='/admin/members/bills'">Bills</button></li>
-    <li><button onclick="window.location.href='/admin/home'">home</button></li>
-    <li><button onclick="window.location.href='/admin/shop'">shop</button></li>
-
-    <% membersWithDetails.forEach(member=> { %>
-        <div class="member-card">
-            <h3 class="member-name">
-                <%= member.name %>
-            </h3>
-            <p><strong>Email:</strong>
-                <%= member.email %>
-            </p>
-            <p><strong>Age:</strong>
-                <%= member.memberDetails.age %>
-            </p>
-            <p><strong>Mobile Number:</strong>
-                <%= member.memberDetails.mobileNumber %>
-            </p>
-            <p><strong>Joined At:</strong>
-                <%= new Date(member.memberDetails.joinDate).toLocaleDateString('en-GB', { day: '2-digit' ,
-                    month: 'short' , year: 'numeric' }) %>
-            </p>
-            <p><strong>Membership Plan:</strong>
-                <%= member.memberDetails.membershipPlan %>
-            </p>
-            <p><strong>Duration:</strong>
-                <%= member.memberDetails.planDuration %>
-            </p>
-            <p><strong>Cart:</strong>
-                <%= member.memberDetails.cart %>
-            </p>
-        </div>
+    <nav>
+        <ul>
+            <li><a href="/admin/members/bills">Bills</a></li>
+            <li><a href="/admin/notify">Notifications</a></li>
+            <li><a href="/admin/home">Home</a></li>
+            <li><a href="/admin/shop">Shop</a></li>
+        </ul>
+    </nav><hr>
+    <h1>All Enrolled Members:</h1>
+    <div id="members-container">
+        <% membersWithDetails.forEach(member => { %>
+            <div class="member-card">
+                <h3 class="member-name"><%= member.name %></h3>
+                <p><strong>Email:</strong> <%= member.email %></p>
+                <p><strong>Age:</strong> <%= member.memberDetails.age %></p>
+                <p><strong>Mobile Number:</strong> <%= member.memberDetails.mobileNumber %></p>
+                <p><strong>Joined At:</strong> <%= new Date(member.memberDetails.joinDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %></p>
+                <p><strong>Membership Plan:</strong> <%= member.memberDetails.membershipPlan %></p>
+                <p><strong>Duration:</strong> <%= member.memberDetails.planDuration %></p>
+                <p><strong>Cart:</strong> <%= member.memberDetails.cart %></p>
+            </div>
         <% }); %>
+    </div>
+
+    <script>
+        // Add show class for fade-in animation
+        document.addEventListener("DOMContentLoaded", function () {
+            const memberCards = document.querySelectorAll('.member-card');
+            memberCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, index * 100); // Stagger the animation
+            });
+        });
+    </script>
 </body>
 
 </html>

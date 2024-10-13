@@ -15,6 +15,21 @@
             margin: 0;
             padding: 0;
             transition: background 0.5s ease;
+            opacity: 0;
+            /* Initial opacity for fade-in */
+            animation: fadeIn 1s ease-in-out forwards;
+            /* Animation for fade-in */
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Navbar styling */
@@ -28,6 +43,9 @@
             /* Darker, blackish purple */
             padding: 15px 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in-out forwards;
+            /* Delayed animation for smoothness */
         }
 
         .navbar ul li {
@@ -51,6 +69,9 @@
         .container {
             text-align: center;
             padding: 50px 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+            /* Delayed animation */
         }
 
         h1 {
@@ -63,7 +84,6 @@
         .notifications-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            /* 3 per row */
             gap: 30px;
             justify-content: center;
             margin-top: 20px;
@@ -73,6 +93,11 @@
             text-decoration: none;
             color: white;
             transition: transform 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 2.5s ease-in-out forwards;
+            /* Fade-in effect on boxes */
+            animation-delay: 0.5s;
+            /* Add a delay for better effect */
         }
 
         .notification-box:hover {
@@ -81,7 +106,6 @@
 
         .box {
             background-color: rgba(35, 0, 55, 0.9);
-            /* Darker relative of purple */
             border-radius: 12px;
             padding: 20px;
             text-align: left;
@@ -93,21 +117,18 @@
             transform: translateY(-10px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
             background-color: rgba(25, 0, 40, 1);
-            /* Even darker on hover */
         }
 
         /* Responsive layout */
         @media (max-width: 900px) {
             .notifications-grid {
                 grid-template-columns: repeat(2, 1fr);
-                /* 2 per row on smaller screens */
             }
         }
 
         @media (max-width: 600px) {
             .notifications-grid {
                 grid-template-columns: 1fr;
-                /* 1 per row on mobile */
             }
         }
     </style>
@@ -132,9 +153,9 @@
                 <% for (let i=notifications.length - 1; i>= 0; i--) { %>
                     <a href="/member/notification/<%= notifications[i]._id %>" class="notification-box">
                         <div class="box">
-                           <h2>
+                            <h2>
                                 <%= notifications[i].message %>
-                           </h2>
+                            </h2>
                             <p>Date: <%= notifications[i].datePosted %>
                             </p>
                         </div>

@@ -4,18 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bills</title>
     <style>
+        body {
+            /* Radial gradient background */
+            background: radial-gradient(circle, rgba(0, 50, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+            color: #fff; /* White text for better contrast */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-family: 'Arial', sans-serif;
             font-size: 16px;
-            background-color: #f9f9f9;
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background for table */
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease forwards; /* Animation on load */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         th,
@@ -25,7 +50,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #2e7d32; /* Dark green for headers */
             color: white;
             font-weight: bold;
             text-transform: uppercase;
@@ -33,18 +58,18 @@
         }
 
         td {
-            color: #333;
-            border-bottom: 1px solid #e0e0e0;
+            color: #ddd; /* Light text color */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
         }
 
         /* Add alternate row color for better readability */
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         /* Row hover effect */
         tr:hover {
-            background-color: #d1e7dd;
+            background-color: rgba(255, 255, 255, 0.1);
             transition: background-color 0.3s ease-in-out;
         }
 
@@ -71,7 +96,6 @@
         }
 
         @media (max-width: 768px) {
-
             table,
             thead,
             tbody,
@@ -107,16 +131,46 @@
                 text-align: left;
             }
         }
-    </style>
 
+        /* Button style */
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            position: relative;
+            left: 47%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Animation for table rows */
+        .fadeInRow {
+            opacity: 0;
+            animation: fadeInRow 0.5s forwards;
+        }
+
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>welcome to bills page</h1>
-    <ul>
-        <li><button onclick="window.location.href='/admin/members'">Back to Members</button></li>
-    </ul>
-    <br>
+    <h1>Bills</h1>
     <table border="1">
         <thead>
             <tr>
@@ -132,55 +186,22 @@
             </tr>
         </thead>
         <tbody>
-            <% membersWithDetails.forEach(member=> { %>
-                <tr>
-                    <td>
-                        <%= member.name %>
-                    </td>
-                    <!-- Email -->
-                    <td>
-                        <%= member.email %>
-                    </td>
-
-                    <!-- Age (assuming age is part of memberDetails) -->
-                    <td>
-                        <%= member.memberDetails.age %>
-                    </td>
-
-                    <!-- Mobile Number -->
-                    <td>
-                        <%= member.memberDetails.mobileNumber %>
-                    </td>
-
-                    <!-- Joined At (formatted to display date nicely) -->
-                    <td>
-                        <%= new Date(member.memberDetails.joinDate).toLocaleDateString('en-GB', { day: '2-digit' ,
-                            month: 'short' , year: 'numeric' }) %>
-                    </td>
-
-                    <!-- Membership Plan -->
-                    <td>
-                        <%= member.memberDetails.membershipPlan %>
-                    </td>
-
-                    <!-- Duration -->
-                    <td>
-                        <%= member.memberDetails.planDuration %>
-                    </td>
-
-                    <!-- Amount (from bill details, assuming one bill per member or using the latest bill) -->
-                    <td>
-                        <%= member.billDetails.length> 0 ? member.billDetails[0].amount : "N/A" %>
-                    </td>
-
-                    <!-- Status (paid/unpaid based on bill status) -->
-                    <td>
-                        <%= member.billDetails.length> 0 ? member.billDetails[0].status : "N/A" %>
-                    </td>
+            <% membersWithDetails.forEach((member, index) => { %>
+                <tr class="fadeInRow" style="animation-delay: <%= index * 0.1 %>s;">
+                    <td><%= member.name %></td>
+                    <td><%= member.email %></td>
+                    <td><%= member.memberDetails.age %></td>
+                    <td><%= member.memberDetails.mobileNumber %></td>
+                    <td><%= new Date(member.memberDetails.joinDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %></td>
+                    <td><%= member.memberDetails.membershipPlan %></td>
+                    <td><%= member.memberDetails.planDuration %></td>
+                    <td class="amount"><%= member.billDetails.length > 0 ? member.billDetails[0].amount : "N/A" %></td>
+                    <td class="status <%= member.billDetails.length > 0 ? member.billDetails[0].status : "N/A" %>"><%= member.billDetails.length > 0 ? member.billDetails[0].status : "N/A" %></td>
                 </tr>
-                <% }) %>
+            <% }) %>
         </tbody>
     </table>
+    <button onclick="window.location.href='/admin/members'">Back to Members</button>
 </body>
 
 </html>

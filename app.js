@@ -40,6 +40,17 @@ app.get('/',(req,res)=>{         // This is the official home page. no user,memb
     res.render("homepage.ejs");
 });
 
+app.get('/user/shop/random-products', async (req, res) => {
+    try {
+        // Fetch 3 random products from the Shop collection
+        const randomProducts = await Shop.aggregate([{ $sample: { size: 3 } }]);
+        res.json({ randomProducts }); // Send the products as JSON
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).json({ error: 'Failed to fetch random products' });
+    }
+});
+
 app.get('/signup',(req,res)=>{
     res.render('signup');
 });

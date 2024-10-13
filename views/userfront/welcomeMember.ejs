@@ -1,11 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Welcome to Membership</title>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #434343, #000000);
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .logout-message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #d1e7dd;
+        }
+
+        .home-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #ffffff;
+            background-color: #4a4a4a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #666666;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Welcome to your member ship dear user. Logout and sign in as member now !!</h1>
+    <h1>Welcome to your membership, dear user!</h1>
+    <p class="logout-message">Logout and sign in as a member now!</p>
+    <a href="/" class="home-button">Go to Home</a>
 </body>
+
 </html>

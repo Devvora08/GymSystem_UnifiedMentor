@@ -1,16 +1,690 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Home</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@300;600&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background: url('/static/gympaper.jpg') no-repeat center center;
+            background-size: cover;
+
+            /* You can also try 'contain' for different results */
+            background-attachment: fixed;
+            /* Change fixed to scroll */
+            height: 100vh;
+            /* Sets the height of the body to 100% of the viewport height */
+            width: 100%;
+            overflow-x: hidden;
+            /* Sets the width of the body to 100% */
+            margin: 0;
+            /* Removes default margin */
+            font-family: 'Arial', sans-serif;
+            /* Sets a clean font family */
+            color: #fff;
+            /* Sets a default text color (optional) */
+        }
+
+        nav {
+            width: 100%;
+            /* Full width of the navbar */
+            padding: 10px 20px;
+            /* Add some padding */
+            display: flex;
+            /* Use flexbox for alignment */
+            justify-content: space-between;
+            /* Space out left and right content */
+            align-items: center;
+            /* Center items vertically */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Semi-transparent black background */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            /* Subtle shadow for depth */
+            position: relative;
+            /* Allow for absolute positioning of child elements if needed */
+            transition: background-color 0.3s ease;
+            /* Smooth background transition */
+        }
+
+        .navbar-container {
+            width: 100%;
+            /* Full width of the navbar container */
+            max-width: 1200px;
+            /* Limit max width */
+            margin: 0 auto;
+            /* Center the navbar */
+            display: flex;
+            /* Use flexbox for layout */
+            justify-content: space-between;
+            /* Space out the left and right sides */
+            align-items: center;
+            /* Center items vertically */
+        }
+
+        .navbar-left {
+            color: #fff;
+            /* Text color */
+            font-size: 1.2em;
+            /* Slightly larger font size for emphasis */
+            font-weight: bold;
+            /* Bold text */
+        }
+
+        .navbar-right a {
+            margin-left: 20px;
+            /* Space between links */
+            color: #fff;
+            /* Link color */
+            text-decoration: none;
+            /* Remove underline */
+            position: relative;
+            /* Position relative for hover effect */
+            font-size: 1em;
+            /* Standard font size */
+            transition: color 0.3s ease, transform 0.3s ease;
+            /* Smooth color and transform transition */
+        }
+
+        .navbar-right a:hover {
+            color: #ffd700;
+            /* Gold color on hover for links */
+            transform: scale(1.1);
+            /* Slightly enlarge the link on hover */
+        }
+
+        .navbar-right a::after {
+            content: '';
+            /* Pseudo-element for hover underline */
+            display: block;
+            height: 2px;
+            /* Height of the underline */
+            background: #ffd700;
+            /* Gold color */
+            width: 0;
+            /* Start width */
+            transition: width 0.3s ease;
+            /* Smooth width transition */
+            position: absolute;
+            /* Positioning for underline */
+            bottom: -5px;
+            /* Position under the text */
+            left: 0;
+            /* Align to left */
+        }
+
+        .navbar-right a:hover::after {
+            width: 100%;
+            /* Full width on hover */
+        }
+
+
+        .events-container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 80%;
+            font-family: 'Poppins', sans-serif;
+            /* Elegant and modern font */
+        }
+
+        /* Heading style for the events section */
+        h2 {
+            font-size: 2.8rem;
+            color: #e6e6e6;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Wrapper for all event boxes */
+        .events-wrapper {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        /* Individual event boxes */
+        .event-box {
+            background: rgba(255, 255, 255, 0.15);
+            /* Glassmorphism effect */
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            /* Initially invisible */
+            transform: translateY(30px);
+            /* Slide from below */
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            border-radius: 20px;
+            padding: 25px;
+            width: 300px;
+            margin: 20px;
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+                /* Starts down */
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                /* Moves to original position */
+            }
+        }
+
+        .fade-in {
+
+            animation: fadeInUp 0.8s ease forwards;
+
+        }
+
+        /* Adding a delay for smooth staggered animation */
+        .event-box:nth-child(1) {
+            transition-delay: 0.3s;
+        }
+
+        .event-box:nth-child(2) {
+            transition-delay: 0.5s;
+        }
+
+        .event-box:nth-child(3) {
+            transition-delay: 0.7s;
+        }
+
+        /* Hover effect for event boxes */
+        .event-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+            /* More visible when hovered */
+        }
+
+        /* Event title style */
+        .event-box h3 {
+            font-size: 1.9rem;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        /* Description and timing details */
+        .event-box p {
+            margin: 12px 0;
+            color: #d0d0d0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Timing and date */
+        .timing {
+            margin-top: 15px;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #b0b0b0;
+        }
+
+        .plans-container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 80%;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+        }
+
+        .plans-container h2 {
+            font-size: 2.8rem;
+            color: #e6e6e6;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Wrapper for all plan boxes */
+        .plans-wrapper {
+            list-style: none;
+            /* Remove default list styling */
+            padding: 0;
+            /* Remove default padding */
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        /* Individual plan boxes */
+        .plan-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px;
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            width: 250px;
+            /* Adjust width as needed */
+            transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        .plan-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Logo container */
+        .logo-container {
+            margin-top: 15px;
+        }
+
+        /* Plan logo */
+        .plan-logo {
+            max-width: 100%;
+            /* Ensure the logo scales responsively */
+            height: auto;
+            /* Maintain aspect ratio */
+        }
+
+        /* Button styles */
+        .view-all-btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            background-color: #4CAF50;
+            /* Green background */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            background-color: #45a049;
+            /* Darker green on hover */
+        }
+
+        /* Fade-in effect for each plan */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Adding a delay for smooth staggered animation */
+        .plan-box:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .plan-box:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .plan-box:nth-child(3) {
+            animation-delay: 0.7s;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            /* Applies the strikethrough effect */
+            color: #b0b0b0;
+            /* Optional: Change the color to indicate it's the original price */
+            margin-right: 5px;
+            /* Optional: Adds some space to the right of the strikethrough */
+        }
+
+        #shop {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 80%;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #shop h2 {
+            font-size: 2.5rem;
+            color: #e6e6e6;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        #shop ul {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Individual product boxes */
+        .product-box {
+            background: rgba(255, 255, 255, 0.15);
+            /* Glassmorphism effect */
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            width: 300px;
+            margin: 20px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+        }
+
+        .product-box:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .product-box strong {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #fff;
+            display: block;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        /* Ensures consistent image size across all boxes */
+        .product-box img {
+            width: 180px;
+            /* Set a fixed width */
+            height: 180px;
+            /* Set a fixed height for consistency */
+            object-fit: cover;
+            /* Ensures image is cropped if necessary */
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .product-box p {
+            margin: 12px 0;
+            color: #d0d0d0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        #shop ul li {
+            flex: 0 1 30%;
+            /* To display 3 items per row */
+            max-width: 300px;
+            /* Ensures box width remains constant */
+        }
+        #admin-contacts {
+        text-align: center;
+        margin: 50px auto;
+        padding: 20px;
+        max-width: 80%;
+        font-family: 'Poppins', sans-serif;
+        color: #e6e6e6;
+    }
+
+    /* Centered heading */
+    #admin-contacts h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Flexbox layout to center the admin contact cards */
+    .admin-wrapper {
+        display: flex;
+        justify-content: center; /* Center the boxes horizontally */
+        gap: 20px; /* Space between boxes */
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        padding: 0 10px;
+    }
+
+    /* Style for each admin contact box */
+    #admin-contacts ul {
+        background: rgba(255, 255, 255, 0.15); /* Glassmorphism */
+        backdrop-filter: blur(12px);
+        border-radius: 15px;
+        padding: 20px;
+        width: 280px; /* Fixed width for uniform size */
+        margin: 20px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        color: #ffffff;
+        transition: transform 0.3s ease, box-shadow 0.4s ease, background 0.4s ease;
+    }
+
+    /* Hover effect on admin boxes */
+    #admin-contacts ul:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* List items inside each admin box */
+    #admin-contacts li {
+        list-style: none;
+        margin: 10px 0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #d0d0d0;
+    }
+
+    /* Bold text for important details */
+    #admin-contacts strong {
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Responsive layout for smaller screens */
+    @media (max-width: 768px) {
+        .admin-wrapper {
+            flex-direction: column; /* Stack vertically on small screens */
+            align-items: center;
+        }
+
+        #admin-contacts ul {
+            width: 100%; /* Take full width on small screens */
+            margin-bottom: 30px;
+        }
+    }
+    </style>
 </head>
-<body>
-    <h1>welcome user! you logged in !!!</h1>
-    <ul>
-        <li><button onclick="window.location.href='/user/plans'">Plans</button></li>
-        <li><button onclick="window.location.href='/user/membership'">Become Member</button></li>
-        <li><button onclick="window.location.href='/user/store'">Shop</button></li>
-    </ul>
+
+<body onload="fadeIn()">
+    <nav>
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <span>Welcome User</span>
+            </div>
+            <div class="navbar-right">
+                <a href="/user/plans">Plans</a>
+                <a href="/user/shop">Shop</a>
+                <a href="/user/membershop">Membership</a>
+                <a href="/">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="events-container">
+        <h2>Upcoming Events & Classes</h2>
+        <div class="events-wrapper">
+            <% events.forEach(event=> { %>
+                <div class="event-box">
+                    <h3>
+                        <%= event.name %>
+                    </h3>
+                    <p>
+                        <%= event.description %>
+                    </p>
+                    <p class="timing">Date: <%= event.date.toDateString() %> | Time: <%= event.time %>
+                    </p>
+                    <div class="enroll-info">
+                        <p>Contact Admin: <%= event.admin.name %>
+                        </p>
+                        <a href="mailto:<%= event.admin.email %>">Enroll Now</a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <section id="plans" class="plans-container">
+        <h2>Plans</h2>
+        <ul class="plans-wrapper">
+            <% const randomPlans=discountedPlans.sort(()=> 0.5 - Math.random()).slice(0, 3); %>
+                <% randomPlans.forEach(plan=> { %>
+                    <li class="plan-box fade-in">
+                        <strong>
+                            <%= plan.planName %>
+                        </strong>: Rs.<%= plan.originalPrice %>
+                            <div class="logo-container">
+                                <img src="<%= plan.logoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
+                            </div>
+                    </li>
+                    <% }) %>
+        </ul>
+        <button onclick="window.location.href='/user/plans'" class="view-all-btn">View All Plans</button>
+    </section>
+
+
+    <div class="plan-offers-container">
+        <h2 style="text-align: center;">Special Offers on Membership Plans</h2><br><br>
+        <div class="plans-wrapper">
+            <% discountedPlans.forEach(plan=> { %>
+                <div class="plan-box">
+                    <img src="<%= plan.logoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
+                    <h3>
+                        <%= plan.planName %> Plan
+                    </h3>
+                    <p class="plan-duration">Duration: <%= plan.planDuration %>
+                    </p>
+                    <p class="plan-description">
+                        <%= plan.description %>
+                    </p>
+                    <p class="original-price">
+                        Original Price: <span class="strikethrough">Rs.<%= plan.originalPrice %></span>
+                    </p>
+                    <p class="discounted-price">Discounted Price: Rs.<%= plan.discountedPrice %>
+                    </p>
+                    <p class="offer-period">Offer valid from: <%= plan.offerPeriod %>
+                    </p>
+                </div>
+                <% }) %>
+        </div>
+    </div>
+
+    <section id="shop">
+        <h2 style="text-align: center;">Shop Products</h2>
+        <ul>
+            <% randomProducts.forEach(product=> { %>
+                <li>
+                    <strong>
+                        <%= product.itemName %>
+                    </strong>: Rs.<%= product.price %>
+                        <div>
+                            <img src="<%= product.imageUrl %>" alt="<%= product.itemName %> Image">
+                        </div>
+                </li>
+                <% }) %>
+        </ul>
+    </section>
+
+    <section id="admin-contacts">
+        <h2>Admin Contacts</h2>
+        <div class="admin-wrapper">
+            <% admins.forEach((admin, index) => { %>
+            <ul>
+                <li>Name: <strong><%= admin.name %></strong></li>
+                <li>Email: <strong><%= admin.email %></strong></li>
+                <li>Admin ID: <strong><%= adminDetails[index].userId %></strong></li>
+                <li>Contact: <strong><%= adminDetails[index].mobileNumber %></strong></li>
+            </ul>
+            <% }) %>
+        </div>
+    </section>
+
+
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                const eventBoxes = document.querySelectorAll('.event-box');
+                eventBoxes.forEach((box) => {
+                    box.classList.add('fade-in');
+                });
+            }, 300); // Slight delay before animation starts
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            async function fetchAndUpdateProducts() {
+                try {
+                    console.log('Fetching products...');
+
+                    const response = await fetch('/user/shop/random-products');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    console.log('Fetched products:', data);
+
+                    const productsList = document.querySelector('#shop ul');
+                    console.log(productsList);  // Check if productsList is null
+
+                    // Check if the element was found
+                    if (productsList) {
+                        productsList.innerHTML = ''; // Clear current items
+
+                        // Check if the products were fetched
+                        if (data.randomProducts && data.randomProducts.length > 0) {
+                            data.randomProducts.forEach(product => {
+                                const productHTML = `
+                            <li class="product-box">
+                                <strong>${product.itemName}</strong>: Rs.${product.price}
+                                <div>
+                                    <img src="${product.imageUrl}" alt="${product.itemName} Image">
+                                </div>
+                            </li>`;
+                                productsList.innerHTML += productHTML;
+                            });
+                        } else {
+                            productsList.innerHTML = '<li>No products available.</li>';
+                        }
+                    } else {
+                        console.error('The products list element was not found in the DOM.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+            }
+
+            // Set interval for fetching new products every 15 seconds
+            setInterval(fetchAndUpdateProducts, 5000);
+
+            // Initial call to load products
+            fetchAndUpdateProducts();
+        });
+    </script>
 </body>
+
 </html>

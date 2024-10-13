@@ -18,6 +18,12 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        body.fade-in {
+            opacity: 1;
         }
 
         /* Header/Navbar Styling */
@@ -143,61 +149,51 @@
     <main class="member-details-container">
         <h1>Welcome to Member Details</h1>
         <section class="member-info">
-            <h2>Member Name: <%= user.name %>
-            </h2>
-            <p>Email: <%= user.email %>
-            </p>
-            <p>Membership ID: <%= memberDetails.membershipId %>
-            </p>
-            <p>Membership Plan: <%= memberDetails.membershipPlan %>
-            </p>
-            <p>Phone Number: <%= memberDetails.mobileNumber %>
-            </p>
-            <p>Plan Duration: <%= memberDetails.planDuration %>
-            </p>
-            <p>Plan Description: <%= myPlan.description %>
-            </p>
-            <p>Plan Price: Rs.<%= myPlan.planPrice %>
-            </p>
-            <p>Age: <%= memberDetails.age %>
-            </p>
-            <p>Join Date: <%= memberDetails.joinDate %>
-            </p>
+            <h2>Member Name: <%= user.name %></h2>
+            <p>Email: <%= user.email %></p>
+            <p>Membership ID: <%= memberDetails.membershipId %></p>
+            <p>Membership Plan: <%= memberDetails.membershipPlan %></p>
+            <p>Phone Number: <%= memberDetails.mobileNumber %></p>
+            <p>Plan Duration: <%= memberDetails.planDuration %></p>
+            <p>Plan Description: <%= myPlan.description %></p>
+            <p>Plan Price: Rs.<%= myPlan.planPrice %></p>
+            <p>Age: <%= memberDetails.age %></p>
+            <p>Join Date: <%= memberDetails.joinDate %></p>
         </section>
 
         <section class="recent-notification">
-            <h2>Recent Notification: <%= lastMsg.title %>
-            </h2>
-            <p>Message: <%= lastMsg.message %>
-            </p>
-            <p>Posted On: <%= lastMsg.datePosted %>
-            </p>
+            <h2>Recent Notification: <%= lastMsg.title %></h2>
+            <p>Message: <%= lastMsg.message %></p>
+            <p>Posted On: <%= lastMsg.datePosted %></p>
         </section>
 
         <section class="cart">
-            <% if (cartItems.length> 0) { %>
+            <% if (cartItems.length > 0) { %>
                 <h2>Cart Items</h2>
                 <% cartItems.forEach(function(item) { %>
                     <div class="cart-item">
                         <img src="<%= item.imageUrl %>" alt="<%= item.itemName %>" class="item-image">
                         <div class="item-details">
-                            <h4>
-                                <%= item.itemName %>
-                            </h4>
-                            <p>Price: Rs.<%= item.price %>
-                            </p>
+                            <h4><%= item.itemName %></h4>
+                            <p>Price: Rs.<%= item.price %></p>
                         </div>
                         <form class="remove-item-form" method="POST" action="/member/details">
                             <input type="hidden" name="itemId" value="<%= item._id %>">
                             <button type="submit" class="remove-btn">Remove</button>
                         </form>
                     </div>
-                    <% }) %>
-                        <% } else { %>
-                            <p>Your cart is empty. Please add items to your cart.</p>
-                            <% } %>
+                <% }) %>
+            <% } else { %>
+                <p>Your cart is empty. Please add items to your cart.</p>
+            <% } %>
         </section>
     </main>
+
+    <script>
+        window.addEventListener('load', function() {
+            document.body.classList.add('fade-in');
+        });
+    </script>
 </body>
 
 </html>
