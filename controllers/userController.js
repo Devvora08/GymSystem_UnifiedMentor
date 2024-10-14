@@ -90,43 +90,46 @@ async function becomeMember(req, res) {
 };
 
 async function newMemberEntry(req, res) {
-    const { age, membershipPlan } = req.body;
+    const { age, plan } = req.body; // Check if both values are present
     const userId = req.user._id;
 
+    //console.log(age, plan); // Log the incoming form data for debugging
+
     try {
-
         const updateUser = await AllUser.findByIdAndUpdate(userId, { role: 'member' });
-        const myPlan = await Plan.find({ _id: membershipPlan });
+        const myPlan = await Plan.findById(plan); // Find plan by ID
 
-        if (myPlan.length > 0) {
-            console.log(myPlan[0].planDuration);
+        if (myPlan) {
+            const newMember = await AllMember.create({
+                userId: userId,
+                age: age, // This should now correctly capture the age
+                membershipPlan: myPlan.planName,
+                mobileNumber: 999999999, // Placeholder for mobile number
+                planDuration: myPlan.planDuration,
+                startDate: new Date(),
+            });
+
+            const newBill = await Bill.create({
+                memberId: newMember._id,
+                username: updateUser.email,
+                amount: myPlan.planPrice,
+                status: 'Unpaid',
+                dueDate: Date.now(),
+                description: `Membership fee for ${myPlan.planName}`,
+            });
+
+            res.status(201).render('userfront/welcomeMember');
         } else {
             console.log("No plan found with the given ID.");
+            res.status(404).json({ message: 'No plan found.' });
         }
-
-        const newMember = await AllMember.create({
-            userId: userId,
-            age: age,
-            membershipPlan: myPlan[0].planName,
-            mobileNumber: 999999999,
-            planDuration: myPlan[0].planDuration,
-            startDate: new Date(),
-        });
-
-        const newBill = await Bill.create({
-            memberId: newMember._id, // Reference to the newly created member
-            username: updateUser.email, // Assuming username is the email from AllUser
-            amount: myPlan[0].planPrice, // Assuming planPrice is the bill amount
-            status: 'Unpaid', // Set initial status to 'Unpaid'
-            dueDate: Date.now(),
-            description: `Membership fee for ${myPlan[0].planName}`, // Optional description
-        });
-        res.status(201).render('userfront/welcomeMember');
     } catch (error) {
         console.error("Error processing membership:", error);
         res.status(500).json({ message: 'Error processing membership.' });
     }
+   
 }
+
 
 
 async function getPlans(req, res) {

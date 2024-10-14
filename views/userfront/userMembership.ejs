@@ -208,15 +208,15 @@
     </nav>
     <h1>Select Your Plan</h1>
     <div class="form-container" id="formContainer">
-        <form id="membershipForm">
+        <form id="membershipForm" method="post" action="/user/membership">
             <label for="age" style="position: relative; left: 40%; color: #000000; font-weight: bold;">Enter your Age:</label>
-            <input type="number" id="age" class="age-input" style="position: relative; left: 40%;" required
-                placeholder="Age" />
+            <input type="number" id="age" name="age" class="age-input" style="position: relative; left: 40%;" required placeholder="Age" />
+
 
             <div class="plans">
                 <% allPlans.forEach((plan, index)=> { %>
                     <label>
-                        <input type="radio" name="plan" value="<%= plan.planName %>" required />
+                        <input type="radio" name="plan" value="<%= plan._id %>" required />
                         <div class="plan-card">
                             <img src="<%= plan.planLogoUrl %>" alt="<%= plan.planName %> Logo" class="plan-logo">
                             <h2 class="highlight">
@@ -245,12 +245,7 @@
             formContainer.style.transform = 'translateY(0)'; // Slide up
         }
 
-        // Optional: Add event listener to handle form submission
-        document.getElementById('membershipForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            // Add your form submission logic here
-            alert('Membership selected!');
-        });
+    
     </script>
 </body>
 

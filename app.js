@@ -31,7 +31,7 @@ app.set('views',path.resolve('./views'));
 
 //Middlewares here
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
