@@ -3,11 +3,102 @@ const Shop = require('../model/shopSchema');
 const AllMember = require('../model/allMembersSchema');
 const AllUser = require('../model/allUsersSchema');
 const Bill = require('../model/billschema');
+const Admin = require('../model/adminSchema');
 
 
-function getAdmin(req,res){
-    res.render('adminfront/admin');
-};
+async function getAdmin(req, res) {
+    try {
+        // Fetch all admins
+        const admins = await AllUser.find({ role: 'admin' });
+        if (!admins || admins.length === 0) {
+            return res.status(404).json({ msg: "No admins found" });
+        }
+        
+        // Fetch total users count
+        const totalUsersCount = await AllUser.countDocuments();
+        const allUsers = await AllUser.find({});
+        // Fetch member  details
+        const members = await AllMember.find({});
+        // Fetch recent member
+        const recentMember = await AllMember.findOne()
+            .sort({ joinDate: -1 });
+
+        let userDetails = null; // Initialize a variable for user details
+
+        // If recent member is found, fetch its user details
+        if (recentMember) {
+            userDetails = await AllUser.findById(recentMember.userId);
+        }
+        const basicplan = await AllMember.find({membershipPlan:"basic"});
+        //console.log(basicplan)
+        // Fetch unpaid bills and populate member information
+        const unpaidBills = await Bill.find({ status: 'Unpaid' });
+             // Adjust according to your schema
+
+        // Fetch recently updated items from the Shop collection
+        const recentItems = await Shop.find({}).sort({ updatedAt: -1 }).limit(3); 
+        const recentNotification = await Notification.findOne().sort({ datePosted: -1 }).exec();
+        const basicMembers = await AllMember.find({ membershipPlan: 'Basic' });
+        const goldMembers = await AllMember.find({ membershipPlan: 'Gold' });
+    
+        // Fetch members with the "Standard" membership plan
+        const standardMembers = await AllMember.find({ membershipPlan: 'Standard' });
+        
+        // Fetch members with the "Premium" membership plan
+        const premiumMembers = await AllMember.find({ membershipPlan: 'Premium' });
+        
+        // Fetch members with the "Premium-Gold" membership plan
+        const premiumGoldMembers = await AllMember.find({ membershipPlan: 'Premium-Gold' });
+        // Hardcoded upcoming events
+        const today = new Date();
+        const events = [
+            {
+                name: 'Yoga Class',
+                description: 'Join our relaxing and refreshing yoga class.',
+                date: new Date(today.setDate(today.getDate() + 1)), // 1 day from today
+                time: '10:00 AM',
+                admin: admins[0] // Assuming the first admin organizes this event
+            },
+            {
+                name: 'HIIT Workout',
+                description: 'High-Intensity Interval Training to get your heart pumping!',
+                date: new Date(today.setDate(today.getDate() + 3)), // 3 days from today
+                time: '5:00 PM',
+                admin: admins[1] // Second admin organizes this event
+            },
+            {
+                name: 'Nutrition Workshop',
+                description: 'Learn about balanced diets and meal planning from experts.',
+                date: new Date(today.setDate(today.getDate() + 5)), // 5 days from today
+                time: '2:00 PM',
+                admin: admins[0] // First admin again
+            }
+        ];
+       
+
+        // Render admin homepage with all required data
+        res.render('adminfront/admin', {
+            adminDetails: admins,
+            unpaidBills,
+            members,
+            basicMembers,
+            standardMembers,
+            goldMembers,
+            premiumMembers,
+            premiumGoldMembers,
+            events,
+            allUsers,
+            recentItems,
+            recentNotification,
+            totalUsersCount,
+            recentMember, // Keep the recent member object
+            userDetails,  // Pass the user details as well
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server error" });
+    }
+}
 async function getMembers(req,res){
     const allMembers = await AllMember.find({});
     const allUsers = await AllUser.find({role:"member"});

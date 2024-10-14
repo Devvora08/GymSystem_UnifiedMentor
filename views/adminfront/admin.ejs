@@ -1,19 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/adminHome.css">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"> <!-- Google Font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: radial-gradient(circle, rgba(29, 53, 87, 1) 0%, rgba(9, 24, 42, 1) 100%);
+            color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background-color: #1b2631;
+            padding: 1rem;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #f0f4f8;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff9be6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            justify-items: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .totals, .recent-member, .unpaid-bills, .last-notification, .recent-shop-items, .events-container {
+            background-color: rgba(27, 38, 49, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .totals:hover, .recent-member:hover, .unpaid-bills:hover, .last-notification:hover, .recent-shop-items:hover, .events-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        h2, h3, h4 {
+            color: #ff74e6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        td {
+            background-color: #1b2631;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .link-button:hover {
+            background-color: #0056b3;
+        }
+
+        .recent-shop-items ul {
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recent-shop-items li {
+            background-color: #2b3a42;
+            padding: 1rem;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .recent-shop-items li:hover {
+            background-color: #34495e;
+        }
+
+        img {
+            max-width: 80px;
+            border-radius: 5px;
+        }
+
+        .events-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-item {
+            background-color: #2b3a42;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+        }
+    </style>
 </head>
+
 <body>
     <nav>
         <ul>
-            <li><button onclick="window.location.href='/admin/notify'">notify</button></li>
-            <li><button onclick="window.location.href='/admin/shop'">shop</button></li>
-            <li><button onclick="window.location.href='/admin/members'">Members</button></li>
-            <li><button onclick="window.location.href='/'">logout</button></li>
+            <li><a href="/admin/notify">Notify</a></li>
+            <li><a href="/admin/shop">Shop</a></li>
+            <li><a href="/admin/members">Members</a></li>
+            <li><a href="/admin/members/bills">Bills</a></li>
+            <li><a href="/">Logout</a></li>
         </ul>
     </nav>
+
+    <div class="container">
+        <div class="totals">
+            <h2>Total Users: <%= totalUsersCount %></h2>
+            <h2>Total Members: <%= members.length %></h2>
+        </div>
+
+        <div class="recent-member">
+            <h3>Most Recent Membership:</h3>
+            <% if (recentMember) { %>
+                <p>Name: <%= userDetails ? userDetails.name : 'User not found' %></p>
+                <p>Membership Plan: <%= recentMember.membershipPlan %></p>
+                <p>Plan Duration: <%= recentMember.planDuration %></p>
+                <p>Age: <%= recentMember.age %></p>
+                <p>Contact: <%= recentMember.mobileNumber %></p>
+            <% } else { %>
+                <p>No members found.</p>
+            <% } %>
+        </div>
+
+        <div class="unpaid-bills">
+            <h3>Members with Unpaid Bills:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Membership Plan</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% unpaidBills.forEach(bill => { %>
+                        <% const memberDetails = members.find(member => member._id.equals(bill.memberId)); %>
+                        <% const userDetails = allUsers.find(user => user._id.equals(memberDetails.userId)); %>
+                        <tr>
+                            <td><%= userDetails.name %></td>
+                            <td><%= memberDetails.membershipPlan %></td>
+                            <td>$<%= bill.amount %></td>
+                            <td><%= bill.status %></td>
+                            <td><%= bill.dueDate.toDateString() %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="last-notification">
+            <h3>Last Notification:</h3>
+            <% if (recentNotification) { %>
+                <p><strong>Message:</strong> <%= recentNotification.message %></p>
+                <p><strong>Date Posted:</strong> <%= recentNotification.datePosted.toDateString() %></p>
+            <% } else { %>
+                <p>No recent notifications available.</p>
+            <% } %>
+        </div>
+
+        <div class="recent-shop-items">
+            <h3>Recently Updated Shop Items:</h3>
+            <ul>
+                <% recentItems.forEach(item => { %>
+                    <li>
+                        <img src="<%= item.imageUrl %>" alt="<%= item.name %>">
+                        <div>
+                            <h4><%= item.name %></h4>
+                            <p><strong>Price:</strong> $<%= item.price %></p>
+                            <p><strong>Description:</strong> <%= item.description %></p>
+                            <a href="/admin/shop/<%= item._id %>" class="link-button">View Item</a>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+
+        <div class="events-container" >
+            <h1 class="events-title">Upcoming Events</h1>
+            <ul class="events-list">
+                <% events.forEach(event => { %>
+                    <li class="event-item" style=" list-style: lower-roman;">
+                        <h2 class="event-name"><%= event.name %></h2>
+                        <p class="event-description"><strong>Description:</strong> <%= event.description %></p>
+                        <p class="event-date"><strong>Date:</strong> <%= event.date.toLocaleDateString() %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+    <h1 style="color: #ff74e6; font-size: 50px; position: relative; right: 5%;">Plan-Chart</h1>
+    <div style="width: 600px; height: 600px; margin: auto;">
+        <canvas id="pieChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    
+    // Membership data passed from the backend
+    const data = {
+        labels: ['Basic', 'Gold', 'Standard', 'Premium', 'Premium-Gold'],
+        datasets: [{
+            label: 'Members by Plan',
+            data: [
+                <%= basicMembers.length %>, 
+                <%= goldMembers.length %>, 
+                <%= standardMembers.length %>, 
+                <%= premiumMembers.length %>, 
+                <%= premiumGoldMembers.length %>
+            ],
+            backgroundColor: [
+             "#A2D9D9", "#73C5C5", "#009596", "#005F60", "#003737"
+            ],
+            borderColor: '#ffffff',
+            borderWidth: 2
+        }]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: {
+                    color: "#FFFFFF",  // Dark gray legend text for a clean look
+                    padding: 20
+                }
+            }
+        }
+    };
+
+    const pieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options
+    });
+</script>    
 </body>
+
 </html>
+
+

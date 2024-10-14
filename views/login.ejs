@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Form</title>
     <style>
         body {
             background: radial-gradient(circle, rgba(36, 232, 212, 0.8), rgba(0, 26, 22, 0.9)); /* Dark radial gradient */
@@ -47,8 +47,7 @@
         }
 
         input[type="email"],
-        input[type="password"],
-        input[type="text"] {
+        input[type="password"] {
             width: 90%; /* Full width */
             padding: 10px; /* Inner spacing */
             border: none; /* Remove border */
@@ -59,22 +58,17 @@
             font-size: 1em; /* Font size */
         }
 
-        .button-container {
-            display: flex; /* Use flexbox for layout */
-            justify-content: space-between; /* Space buttons evenly */
-            margin-top: 15px; /* Space above buttons */
-        }
-
         button {
             background-color: #00796B; /* Darker teal button color */
             color: #FFFFFF; /* White button text */
-            padding: 10px; /* Inner spacing */
+            padding: 8px; /* Inner spacing */
             border: none; /* Remove border */
             border-radius: 5px; /* Rounded corners */
             cursor: pointer; /* Pointer cursor */
             font-size: 1em; /* Font size */
             transition: background-color 0.3s; /* Smooth transition */
-            width: 48%; /* Adjust width to fit side by side */
+            width: 25%; /* Full width */
+            margin-right: 10px;
         }
 
         button:hover {
@@ -84,25 +78,24 @@
         button:focus {
             outline: none; /* Remove focus outline */
         }
+        .button-container {
+            display: flex; /* Use flexbox for layout */
+            justify-content: left; /* Space buttons evenly */
+            margin-top: 15px; /* Space above buttons */
+        }
     </style>
 </head>
 <body>
-    <h1>Enter your credentials</h1>
-    <form action="/signup" method="POST" class="signup-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="email">Email:</label>
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        <label for="email">Username (Email):</label>
         <input type="email" id="email" name="email" required>
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
         
-        <!-- Hidden field for the role, default to 'user' -->
-        <input type="hidden" id="role" name="role" value="user">
-        
         <div class="button-container">
-            <button type="submit">Sign Up</button>
+            <button type="submit">Login</button>
             <button type="button" onclick="window.location.href='/'">Go Back</button>
         </div>
     </form>

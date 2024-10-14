@@ -29,7 +29,7 @@ async function getMember(req, res) {
 
     const bills = await Bill.find({ memberId: memberDetails._id });
     const admins = await AllUser.find({ role: 'admin' });
-    const recentNotification = await Notification.findOne({}).sort({ createdAt: -1 }).limit(1);
+    const recentNotification = await Notification.findOne().sort({ datePosted: -1 }).exec();
     const events = [
         {
             name: 'Yoga Class',
